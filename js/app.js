@@ -11,6 +11,27 @@ let currentSystemKey = 'digestive';
 let currentDetailLevel = 'basic';
 const detailOrder = { basic: 1, medium: 2, advanced: 3 };
 
+const organImages = {
+  heart: 'images/organs/heart-vintage-anatomy.jpg',
+  brain: 'images/organs/brain-vintage-anatomy.jpg',
+  lungs: 'images/organs/lungs-vintage-anatomy.jpg',
+  liver: 'images/organs/liver-vintage-anatomy.jpg',
+  stomach: 'images/organs/stomach-vintage-anatomy.jpg',
+  kidneys: 'images/organs/kidneys-vintage-anatomy.jpg',
+  pancreas: 'images/organs/pancreas-vintage-anatomy.jpg',
+  spleen: 'images/organs/spleen-vintage-anatomy.jpg',
+  intestines: 'images/organs/intestines-vintage-anatomy.jpg',
+  bladder: 'images/organs/urinary-bladder-vintage-anatomy.jpg',
+  esophagus: 'images/organs/esophagus-vintage-anatomy.jpg',
+  trachea: 'images/organs/trachea-bronchi-vintage-anatomy.jpg',
+  bronchi: 'images/organs/trachea-bronchi-vintage-anatomy.jpg',
+  bronchioles: 'images/organs/trachea-bronchi-vintage-anatomy.jpg',
+  thyroid: 'images/organs/thyroid-vintage-anatomy.jpg',
+  eye: 'images/organs/eye-vintage-anatomy.jpg',
+  ear: 'images/organs/ear-vintage-anatomy.jpg',
+  'inner-ear': 'images/organs/ear-vintage-anatomy.jpg'
+};
+
 const systems = {
   digestive: {
     image: 'images/digestive-system-vintage-anatomy.jpg',
@@ -21,9 +42,9 @@ const systems = {
       organ('stomach', 45, 43, 'basic', 'הקיבה', 'הקיבה מערבבת את המזון ומתחילה לפרק אותו בעזרת מיצי עיכול.', 'Stomach', 'The stomach mixes food and begins breaking it down with digestive juices.'),
       organ('liver', 58, 38, 'basic', 'הכבד', 'הכבד מסייע בעיבוד חומרים, פירוק רעלים, אגירת אנרגיה וייצור מרה.', 'Liver', 'The liver processes substances, breaks down toxins, stores energy, and produces bile.'),
       organ('intestines', 50, 64, 'basic', 'המעיים', 'המעיים ממשיכים את תהליך העיכול וסופגים חומרים מזינים ומים.', 'Intestines', 'The intestines continue digestion and absorb nutrients and water.'),
-      organ('salivary-glands', 42, 17, 'medium', 'בלוטות הרוק', 'בלוטות הרוק מייצרות רוק שמתחיל את פירוק המזון ומסייע בבליעה.', 'Salivary Glands', 'Salivary glands produce saliva that begins digestion and helps swallowing.'),
       organ('pancreas', 55, 49, 'medium', 'הלבלב', 'הלבלב מפריש אנזימי עיכול ומסייע בוויסות רמות הסוכר בדם.', 'Pancreas', 'The pancreas releases digestive enzymes and helps regulate blood sugar.'),
       organ('gallbladder', 62, 43, 'medium', 'כיס המרה', 'כיס המרה אוגר מרה ומפריש אותה לעיכול שומנים.', 'Gallbladder', 'The gallbladder stores bile and releases it to help digest fats.'),
+      organ('spleen', 35, 45, 'medium', 'הטחול', 'הטחול מסנן דם, מסייע לפעילות מערכת החיסון ומשתתף בפירוק תאי דם ישנים.', 'Spleen', 'The spleen filters blood, supports the immune system, and helps remove old blood cells.'),
       organ('appendix', 57, 72, 'advanced', 'התוספתן', 'התוספתן הוא שלוחה קטנה של המעי הגס ויש לו תפקיד חיסוני מסוים.', 'Appendix', 'The appendix is a small extension of the large intestine with some immune function.'),
       organ('rectum', 50, 82, 'advanced', 'החלחולת', 'החלחולת אוגרת פסולת לפני יציאתה מן הגוף.', 'Rectum', 'The rectum stores waste before it leaves the body.')
     ]
@@ -36,6 +57,7 @@ const systems = {
       organ('trachea', 50, 31, 'basic', 'קנה הנשימה', 'קנה הנשימה מוביל אוויר מן הגרון אל הריאות.', 'Trachea', 'The trachea carries air from the throat to the lungs.'),
       organ('lungs', 50, 48, 'basic', 'הריאות', 'הריאות מאפשרות חילוף גזים: כניסת חמצן ויציאת פחמן דו־חמצני.', 'Lungs', 'The lungs enable gas exchange: oxygen enters and carbon dioxide leaves.'),
       organ('diaphragm', 50, 67, 'basic', 'הסרעפת', 'הסרעפת היא שריר מרכזי בתהליך הנשימה.', 'Diaphragm', 'The diaphragm is a major muscle used in breathing.'),
+      organ('thyroid', 50, 23, 'medium', 'בלוטת התריס', 'בלוטת התריס נמצאת בקדמת הצוואר ומפרישה הורמונים המשפיעים על חילוף החומרים.', 'Thyroid Gland', 'The thyroid gland sits in the front of the neck and produces hormones that affect metabolism.'),
       organ('larynx', 50, 24, 'medium', 'הגרון', 'הגרון משתתף בנשימה ובהפקת קול.', 'Larynx', 'The larynx supports breathing and voice production.'),
       organ('bronchi', 50, 40, 'medium', 'הסמפונות', 'הסמפונות מתפצלות מקנה הנשימה ומובילות אוויר אל הריאות.', 'Bronchi', 'The bronchi branch from the trachea and carry air into the lungs.'),
       organ('bronchioles', 56, 52, 'advanced', 'הסימפוניות', 'הסימפוניות הן הסתעפויות קטנות המובילות אוויר לעומק הריאות.', 'Bronchioles', 'Bronchioles are small branches that carry air deeper into the lungs.')
@@ -140,6 +162,7 @@ function organ(key, x, y, level, heTitle, heText, enTitle, enText) {
 function lang() { return pageBody.dataset.lang || 'he'; }
 function labelFor(item) { return item[lang()][0]; }
 function visibleOrgans(systemKey) { return systems[systemKey].organs.filter(item => detailOrder[item.level] <= detailOrder[currentDetailLevel]); }
+function imageFor(item) { return organImages[item.key] || null; }
 function renderTabs() {
   const nav = document.getElementById('systemTabs');
   nav.innerHTML = Object.entries(systems).map(([key, system], index) => `
@@ -205,14 +228,19 @@ function openOrgan(systemKey, organKey) {
   const system = systems[systemKey];
   const item = system.organs.find(organItem => organItem.key === organKey);
   const data = item[lang()];
+  const imagePath = imageFor(item);
   modalTitle.textContent = data[0];
   const labels = lang() === 'he'
     ? { latin: 'שם באנגלית / לטיני', system: 'מערכת', level: 'רמת פירוט', role: 'תפקיד עיקרי', location: 'מיקום כללי', fact: 'עובדה מעניינת' }
     : { latin: 'English / Latin name', system: 'System', level: 'Detail level', role: 'Main function', location: 'General location', fact: 'Interesting fact' };
   const location = lang() === 'he' ? 'מסומן על האיור בהתאם למיקום האנטומי הכללי.' : 'Marked on the illustration according to its general anatomical position.';
+  const imageBlock = imagePath ? `<div class="organ-image-wrap"><img class="organ-image" src="${imagePath}" alt="${item.en[0]}"></div>` : '';
   modalText.innerHTML = `
     <div class="info-card">
-      <p class="info-summary">${data[1]}</p>
+      <div class="info-top">
+        ${imageBlock}
+        <p class="info-summary">${data[1]}</p>
+      </div>
       <div class="info-grid-card">
         <div class="info-field"><span class="info-label">${labels.latin}</span><span class="info-value">${item.en[0]}</span></div>
         <div class="info-field"><span class="info-label">${labels.system}</span><span class="info-value">${system.title[lang()]}</span></div>
