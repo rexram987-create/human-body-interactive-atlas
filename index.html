@@ -8,8 +8,8 @@
     :root {
       --bg: #070b12;
       --paper: #101824;
-      --panel: rgba(16, 24, 36, 0.86);
-      --panel-2: rgba(20, 30, 45, 0.90);
+      --panel: rgba(16, 24, 36, 0.88);
+      --panel-2: rgba(20, 30, 45, 0.92);
       --text: #f4eadc;
       --muted: #c8b79f;
       --accent: #d77b55;
@@ -31,6 +31,43 @@
       line-height: 1.7;
     }
 
+    .system-nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(7, 11, 18, .82);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 12px 30px rgba(0,0,0,.28);
+    }
+
+    .nav-inner {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 10px 0;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+
+    .tab {
+      white-space: nowrap;
+      background: rgba(255,255,255,.06);
+      color: var(--muted);
+      border: 1px solid rgba(240,179,106,.14);
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-weight: 850;
+    }
+
+    .tab.active {
+      color: #160f0a;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-color: transparent;
+      box-shadow: 0 10px 24px rgba(215, 123, 85, .22);
+    }
+
     .page {
       width: min(1180px, calc(100% - 28px));
       margin: 0 auto;
@@ -42,10 +79,10 @@
       grid-template-columns: 0.88fr 1.12fr;
       gap: 24px;
       align-items: center;
-      min-height: 90vh;
+      min-height: calc(90vh - 58px);
     }
 
-    .panel, .atlas-card {
+    .panel, .atlas-card, .mini {
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: 28px;
@@ -55,24 +92,9 @@
 
     .panel { padding: clamp(22px, 4vw, 44px); }
 
-    .eyebrow {
-      color: var(--accent-2);
-      font-weight: 900;
-      margin-bottom: 8px;
-    }
-
-    h1 {
-      margin: 0 0 14px;
-      font-size: clamp(2rem, 5.4vw, 4.7rem);
-      line-height: 1.08;
-    }
-
-    .lead {
-      font-size: clamp(1.05rem, 2vw, 1.28rem);
-      color: var(--muted);
-      margin: 0 0 20px;
-    }
-
+    .eyebrow { color: var(--accent-2); font-weight: 900; margin-bottom: 8px; }
+    h1 { margin: 0 0 14px; font-size: clamp(2rem, 5.4vw, 4.7rem); line-height: 1.08; }
+    .lead { font-size: clamp(1.05rem, 2vw, 1.28rem); color: var(--muted); margin: 0 0 20px; }
     .actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
     button {
@@ -86,22 +108,16 @@
     }
 
     button:hover { transform: translateY(-2px); }
+    .primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #17100b; box-shadow: 0 12px 26px rgba(215, 123, 85, .24); }
+    .secondary { background: rgba(255, 255, 255, 0.07); color: var(--accent-2); border: 1px solid var(--border); }
 
-    .primary {
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #17100b;
-      box-shadow: 0 12px 26px rgba(215, 123, 85, .24);
-    }
+    .atlas-card { padding: clamp(12px, 2vw, 22px); position: relative; }
 
-    .secondary {
-      background: rgba(255, 255, 255, 0.07);
+    .active-system {
+      margin: 0 auto 12px;
+      text-align: center;
       color: var(--accent-2);
-      border: 1px solid var(--border);
-    }
-
-    .atlas-card {
-      padding: clamp(12px, 2vw, 22px);
-      position: relative;
+      font-weight: 900;
     }
 
     .atlas-frame {
@@ -124,12 +140,7 @@
       z-index: 1;
     }
 
-    .atlas-image {
-      display: block;
-      width: 100%;
-      height: auto;
-      filter: contrast(1.08) saturate(1.04) brightness(.93);
-    }
+    .atlas-image { display: block; width: 100%; height: auto; filter: contrast(1.08) saturate(1.04) brightness(.93); }
 
     .hotspot {
       position: absolute;
@@ -145,6 +156,8 @@
       z-index: 2;
     }
 
+    .hotspot.hidden { display: none; }
+
     .hotspot::after {
       content: "";
       position: absolute;
@@ -155,54 +168,22 @@
       transition: opacity .18s ease;
     }
 
-    .hotspot:hover,
-    .hotspot:focus-visible {
+    .hotspot:hover, .hotspot:focus-visible {
       background: rgba(240, 179, 106, 0.76);
       outline: none;
       box-shadow: 0 0 0 7px rgba(240, 179, 106, .20), 0 10px 25px rgba(0,0,0,.35);
     }
+    .hotspot:hover::after, .hotspot:focus-visible::after { opacity: 1; }
 
-    .hotspot:hover::after,
-    .hotspot:focus-visible::after { opacity: 1; }
-
-    .atlas-note {
-      margin: 12px auto 0;
-      color: var(--muted);
-      font-size: .95rem;
-      text-align: center;
-    }
-
+    .atlas-note { margin: 12px auto 0; color: var(--muted); font-size: .95rem; text-align: center; }
     main { display: grid; gap: 18px; }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-
-    .mini {
-      background: var(--panel-2);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 18px;
-      box-shadow: 0 14px 34px rgba(0,0,0,.28);
-    }
-
+    .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .mini { background: var(--panel-2); border-radius: 22px; padding: 18px; }
     .mini h3 { margin: 0 0 8px; color: var(--accent-2); }
     .mini p { margin: 0; color: var(--muted); }
 
-    dialog {
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      width: min(520px, calc(100% - 28px));
-      background: var(--paper);
-      color: var(--text);
-      box-shadow: var(--shadow);
-      padding: 0;
-    }
-
+    dialog { border: 1px solid var(--border); border-radius: 24px; width: min(520px, calc(100% - 28px)); background: var(--paper); color: var(--text); box-shadow: var(--shadow); padding: 0; }
     dialog::backdrop { background: rgba(0, 0, 0, .72); }
-
     .modal-content { padding: 24px; }
     .modal-content h2 { margin: 0 0 8px; color: var(--accent-2); }
     .modal-content p { margin: 0; color: var(--muted); }
@@ -220,18 +201,26 @@
   </style>
 </head>
 <body data-lang="he">
+  <nav class="system-nav" aria-label="Body system tabs">
+    <div class="nav-inner">
+      <button class="tab active" data-system="digestive" onclick="setSystem('digestive', this)"><span class="he-text">מערכת העיכול</span><span class="en-text">Digestive</span></button>
+      <button class="tab" data-system="respiratory" onclick="setSystem('respiratory', this)"><span class="he-text">מערכת הנשימה</span><span class="en-text">Respiratory</span></button>
+      <button class="tab" data-system="circulatory" onclick="setSystem('circulatory', this)"><span class="he-text">מערכת הדם</span><span class="en-text">Circulatory</span></button>
+      <button class="tab" data-system="nervous" onclick="setSystem('nervous', this)"><span class="he-text">מערכת העצבים</span><span class="en-text">Nervous</span></button>
+      <button class="tab" data-system="urinary" onclick="setSystem('urinary', this)"><span class="he-text">מערכת השתן</span><span class="en-text">Urinary</span></button>
+      <button class="tab" data-system="all" onclick="setSystem('all', this)"><span class="he-text">הכול</span><span class="en-text">All</span></button>
+    </div>
+  </nav>
+
   <div class="page">
     <header>
       <section class="panel">
         <div class="eyebrow he-text">אטלס לימודי אינטראקטיבי</div>
         <div class="eyebrow en-text en">Interactive Educational Atlas</div>
-
         <h1 class="he-text">אטלס גוף האדם</h1>
         <h1 class="en-text en">Human Body Interactive Atlas</h1>
-
-        <p class="lead he-text">תמונה אנטומית ברורה, עם אזורי לחיצה עדינים שמשתלבים בתוך האיור ולא מעמיסים על המבקר.</p>
-        <p class="lead en-text en">A clear anatomical image with subtle clickable areas that blend into the illustration without overwhelming the visitor.</p>
-
+        <p class="lead he-text">סרגל הטאבים העליון מאפשר לעבור בין מערכות הגוף, כך שהמבקר רואה בכל פעם רק את האיברים הרלוונטיים.</p>
+        <p class="lead en-text en">The top tab bar lets visitors switch between body systems, so only the relevant organs appear at each moment.</p>
         <div class="actions">
           <button class="primary" onclick="scrollToAtlas()"><span class="he-text">התחל לחקור</span><span class="en-text">Start Exploring</span></button>
           <button class="secondary" onclick="toggleLanguage()"><span class="he-text">English</span><span class="en-text">עברית</span></button>
@@ -239,41 +228,28 @@
       </section>
 
       <section class="atlas-card" id="atlas">
+        <div class="active-system" id="activeSystemTitle"></div>
         <div class="atlas-frame" aria-label="Interactive human body image">
           <img class="atlas-image" src="images/human-body.jpg" alt="Historical anatomical illustration of the human body" />
 
-          <button class="hotspot" style="left:50%; top:10%;" onclick="openOrgan('brain')" aria-label="Brain"></button>
-          <button class="hotspot" style="left:48%; top:31%;" onclick="openOrgan('lungs')" aria-label="Lungs"></button>
-          <button class="hotspot" style="left:51%; top:36%;" onclick="openOrgan('heart')" aria-label="Heart"></button>
-          <button class="hotspot" style="left:57%; top:46%;" onclick="openOrgan('liver')" aria-label="Liver"></button>
-          <button class="hotspot" style="left:47%; top:50%;" onclick="openOrgan('stomach')" aria-label="Stomach"></button>
-          <button class="hotspot" style="left:50%; top:65%;" onclick="openOrgan('intestines')" aria-label="Intestines"></button>
+          <button class="hotspot" data-system="nervous" style="left:50%; top:10%;" onclick="openOrgan('brain')" aria-label="Brain"></button>
+          <button class="hotspot" data-system="respiratory" style="left:48%; top:31%;" onclick="openOrgan('lungs')" aria-label="Lungs"></button>
+          <button class="hotspot" data-system="circulatory" style="left:51%; top:36%;" onclick="openOrgan('heart')" aria-label="Heart"></button>
+          <button class="hotspot" data-system="digestive" style="left:57%; top:46%;" onclick="openOrgan('liver')" aria-label="Liver"></button>
+          <button class="hotspot" data-system="digestive" style="left:47%; top:50%;" onclick="openOrgan('stomach')" aria-label="Stomach"></button>
+          <button class="hotspot" data-system="digestive" style="left:50%; top:65%;" onclick="openOrgan('intestines')" aria-label="Intestines"></button>
+          <button class="hotspot" data-system="urinary" style="left:42%; top:57%;" onclick="openOrgan('kidneys')" aria-label="Kidneys"></button>
         </div>
-        <p class="atlas-note he-text">הנקודות עדינות בכוונה: הן מסמנות איברים בלי להסתיר את התמונה.</p>
-        <p class="atlas-note en-text en">The markers are intentionally subtle: they identify organs without hiding the image.</p>
+        <p class="atlas-note he-text">בחר מערכת גוף בסרגל העליון כדי לצמצם עומס ולראות רק את הסימונים המתאימים.</p>
+        <p class="atlas-note en-text en">Choose a body system in the top bar to reduce clutter and show only matching markers.</p>
       </section>
     </header>
 
     <main>
       <section class="info-grid">
-        <article class="mini">
-          <h3 class="he-text">תמונה ברורה</h3>
-          <h3 class="en-text en">Clear Image</h3>
-          <p class="he-text">התמונה מוצגת בגודל גדול ובמרכז הדף.</p>
-          <p class="en-text en">The image is shown large and centered on the page.</p>
-        </article>
-        <article class="mini">
-          <h3 class="he-text">מעט סימונים</h3>
-          <h3 class="en-text en">Few Markers</h3>
-          <p class="he-text">בשלב הראשון מוצגים רק איברים מרכזיים כדי למנוע עומס.</p>
-          <p class="en-text en">Only key organs are shown first to avoid visual overload.</p>
-        </article>
-        <article class="mini">
-          <h3 class="he-text">חוויה דו־לשונית</h3>
-          <h3 class="en-text en">Bilingual Experience</h3>
-          <p class="he-text">כל הסבר קיים בעברית ובאנגלית.</p>
-          <p class="en-text en">Every explanation is available in Hebrew and English.</p>
-        </article>
+        <article class="mini"><h3 class="he-text">טאבים קבועים</h3><h3 class="en-text en">Static Tabs</h3><p class="he-text">סרגל המערכות נשאר למעלה בזמן גלילה.</p><p class="en-text en">The system bar stays at the top while scrolling.</p></article>
+        <article class="mini"><h3 class="he-text">פחות עומס</h3><h3 class="en-text en">Less Clutter</h3><p class="he-text">כל מערכת מציגה רק את האיברים שלה.</p><p class="en-text en">Each system displays only its own organs.</p></article>
+        <article class="mini"><h3 class="he-text">דו־לשוני</h3><h3 class="en-text en">Bilingual</h3><p class="he-text">הטאבים וההסברים עובדים בעברית ובאנגלית.</p><p class="en-text en">Tabs and explanations work in Hebrew and English.</p></article>
       </section>
     </main>
   </div>
@@ -291,41 +267,49 @@
     const modal = document.getElementById('organModal');
     const modalTitle = document.getElementById('modalTitle');
     const modalText = document.getElementById('modalText');
+    const activeSystemTitle = document.getElementById('activeSystemTitle');
+
+    const systems = {
+      digestive: { he: 'מערכת העיכול', en: 'Digestive System' },
+      respiratory: { he: 'מערכת הנשימה', en: 'Respiratory System' },
+      circulatory: { he: 'מערכת הדם', en: 'Circulatory System' },
+      nervous: { he: 'מערכת העצבים', en: 'Nervous System' },
+      urinary: { he: 'מערכת השתן', en: 'Urinary System' },
+      all: { he: 'כל המערכות', en: 'All Systems' }
+    };
 
     const organs = {
-      brain: {
-        he: ['המוח', 'המוח הוא מרכז הבקרה של הגוף. הוא אחראי על חשיבה, זיכרון, רגשות, תנועה ותיאום פעולות.'],
-        en: ['Brain', 'The brain is the body’s control center. It supports thought, memory, emotion, movement, and coordination.']
-      },
-      lungs: {
-        he: ['הריאות', 'הריאות מאפשרות נשימה וחילוף גזים: כניסת חמצן לגוף ויציאת פחמן דו־חמצני.'],
-        en: ['Lungs', 'The lungs support breathing and gas exchange: oxygen enters the body and carbon dioxide leaves it.']
-      },
-      heart: {
-        he: ['הלב', 'הלב הוא משאבה שרירית המזרימה דם לכל חלקי הגוף ומסייעת בהובלת חמצן וחומרי מזון.'],
-        en: ['Heart', 'The heart is a muscular pump that circulates blood and helps transport oxygen and nutrients.']
-      },
-      liver: {
-        he: ['הכבד', 'הכבד מסייע בעיבוד חומרים, פירוק רעלים, אגירת אנרגיה וייצור מרה.'],
-        en: ['Liver', 'The liver helps process substances, break down toxins, store energy, and produce bile.']
-      },
-      stomach: {
-        he: ['הקיבה', 'הקיבה מערבבת את המזון ומתחילה לפרק אותו בעזרת מיצי עיכול.'],
-        en: ['Stomach', 'The stomach mixes food and begins breaking it down with digestive juices.']
-      },
-      intestines: {
-        he: ['המעיים', 'המעיים ממשיכים את תהליך העיכול וסופגים חומרים מזינים ומים אל הגוף.'],
-        en: ['Intestines', 'The intestines continue digestion and absorb nutrients and water into the body.']
-      }
+      brain: { he: ['המוח', 'המוח הוא מרכז הבקרה של הגוף. הוא אחראי על חשיבה, זיכרון, רגשות, תנועה ותיאום פעולות.'], en: ['Brain', 'The brain is the body’s control center. It supports thought, memory, emotion, movement, and coordination.'] },
+      lungs: { he: ['הריאות', 'הריאות מאפשרות נשימה וחילוף גזים: כניסת חמצן לגוף ויציאת פחמן דו־חמצני.'], en: ['Lungs', 'The lungs support breathing and gas exchange: oxygen enters the body and carbon dioxide leaves it.'] },
+      heart: { he: ['הלב', 'הלב הוא משאבה שרירית המזרימה דם לכל חלקי הגוף ומסייעת בהובלת חמצן וחומרי מזון.'], en: ['Heart', 'The heart is a muscular pump that circulates blood and helps transport oxygen and nutrients.'] },
+      liver: { he: ['הכבד', 'הכבד מסייע בעיבוד חומרים, פירוק רעלים, אגירת אנרגיה וייצור מרה.'], en: ['Liver', 'The liver helps process substances, break down toxins, store energy, and produce bile.'] },
+      stomach: { he: ['הקיבה', 'הקיבה מערבבת את המזון ומתחילה לפרק אותו בעזרת מיצי עיכול.'], en: ['Stomach', 'The stomach mixes food and begins breaking it down with digestive juices.'] },
+      intestines: { he: ['המעיים', 'המעיים ממשיכים את תהליך העיכול וסופגים חומרים מזינים ומים אל הגוף.'], en: ['Intestines', 'The intestines continue digestion and absorb nutrients and water into the body.'] },
+      kidneys: { he: ['הכליות', 'הכליות מסננות את הדם, מסייעות בוויסות נוזלים ומייצרות שתן.'], en: ['Kidneys', 'The kidneys filter blood, help regulate fluids, and produce urine.'] }
     };
 
     function lang() { return pageBody.dataset.lang || 'he'; }
+
+    function updateSystemTitle(system) {
+      activeSystemTitle.textContent = systems[system][lang()];
+    }
+
+    function setSystem(system, button) {
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+      button.classList.add('active');
+      document.querySelectorAll('.hotspot').forEach(spot => {
+        spot.classList.toggle('hidden', system !== 'all' && spot.dataset.system !== system);
+      });
+      updateSystemTitle(system);
+      pageBody.dataset.system = system;
+    }
 
     function toggleLanguage() {
       const next = lang() === 'he' ? 'en' : 'he';
       pageBody.dataset.lang = next;
       document.documentElement.lang = next;
       document.documentElement.dir = next === 'he' ? 'rtl' : 'ltr';
+      updateSystemTitle(pageBody.dataset.system || 'digestive');
     }
 
     function openOrgan(key) {
@@ -336,10 +320,9 @@
     }
 
     function closeOrgan() { modal.close(); }
+    function scrollToAtlas() { document.getElementById('atlas').scrollIntoView({ behavior: 'smooth', block: 'center' }); }
 
-    function scrollToAtlas() {
-      document.getElementById('atlas').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+    setSystem('digestive', document.querySelector('.tab[data-system="digestive"]'));
   </script>
 </body>
 </html>
