@@ -51,12 +51,15 @@ main { display: grid; gap: 18px; }
 .mini { background: var(--panel-2); border-radius: 22px; padding: 18px; }
 .mini h3 { margin: 0 0 8px; color: var(--accent-2); }
 .mini p { margin: 0; color: var(--muted); }
-dialog { border: 1px solid var(--border); border-radius: 24px; width: min(680px, calc(100% - 28px)); background: var(--paper); color: var(--text); box-shadow: var(--shadow); padding: 0; }
+dialog { border: 1px solid var(--border); border-radius: 24px; width: min(780px, calc(100% - 28px)); background: var(--paper); color: var(--text); box-shadow: var(--shadow); padding: 0; }
 dialog::backdrop { background: rgba(0, 0, 0, .72); }
 .modal-content { padding: 24px; }
 .modal-content h2 { margin: 0 0 8px; color: var(--accent-2); }
 .modal-content p { margin: 0; color: var(--muted); }
 .info-card { display: grid; gap: 14px; }
+.info-top { display: grid; grid-template-columns: 190px 1fr; gap: 16px; align-items: start; }
+.organ-image-wrap { border: 1px solid rgba(240,179,106,.22); border-radius: 20px; overflow: hidden; background: rgba(255,255,255,.05); box-shadow: inset 0 0 0 1px rgba(255,255,255,.04); }
+.organ-image { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; filter: contrast(1.05) saturate(1.02); }
 .info-summary { color: var(--muted); font-size: 1.05rem; margin: 0; }
 .info-grid-card { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
 .info-field { background: rgba(255,255,255,.06); border: 1px solid rgba(240,179,106,.16); border-radius: 16px; padding: 12px; }
@@ -67,4 +70,4 @@ dialog::backdrop { background: rgba(0, 0, 0, .72); }
 .en { direction: ltr; text-align: left; }
 [data-lang="en"] .he-text { display: none; }
 [data-lang="he"] .en-text { display: none; }
-@media (max-width: 900px) { header, .info-grid, .info-grid-card { grid-template-columns: 1fr; } header { min-height: auto; } .page { padding-top: 14px; } }
+@media (max-width: 900px) { header, .info-grid, .info-grid-card, .info-top { grid-template-columns: 1fr; } .organ-image-wrap { max-width: 240px; margin: 0 auto; } header { min-height: auto; } .page { padding-top: 14px; } }
