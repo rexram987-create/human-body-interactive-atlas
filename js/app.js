@@ -5,6 +5,7 @@ const modalText = document.getElementById('modalText');
 const activeSystemTitle = document.getElementById('activeSystemTitle');
 const atlasImage = document.getElementById('atlasImage');
 const hotspotLayer = document.getElementById('hotspotLayer');
+const organList = document.getElementById('organList');
 
 const systems = {
   digestive: {
@@ -103,6 +104,7 @@ const systems = {
 };
 
 function lang() { return pageBody.dataset.lang || 'he'; }
+function labelFor(organ) { return organ[lang()][0]; }
 
 function renderTabs() {
   const nav = document.getElementById('systemTabs');
@@ -116,7 +118,14 @@ function renderTabs() {
 function renderHotspots(systemKey) {
   const system = systems[systemKey];
   hotspotLayer.innerHTML = system.organs.map(organ => `
-    <button class="hotspot" style="left:${organ.x}%; top:${organ.y}%;" onclick="openOrgan('${systemKey}', '${organ.key}')" aria-label="${organ.en[0]}"></button>
+    <button class="hotspot" title="${labelFor(organ)}" style="left:${organ.x}%; top:${organ.y}%;" onclick="openOrgan('${systemKey}', '${organ.key}')" aria-label="${organ.en[0]}"></button>
+  `).join('');
+}
+
+function renderOrganList(systemKey) {
+  const system = systems[systemKey];
+  organList.innerHTML = system.organs.map(organ => `
+    <button class="organ-chip" onclick="openOrgan('${systemKey}', '${organ.key}')">${labelFor(organ)}</button>
   `).join('');
 }
 
@@ -131,6 +140,7 @@ function setSystem(systemKey, button) {
     atlasImage.src = system.image;
     atlasImage.alt = system.title.en;
     renderHotspots(systemKey);
+    renderOrganList(systemKey);
     atlasImage.classList.remove('is-changing');
   }, 160);
 }
@@ -142,6 +152,8 @@ function toggleLanguage() {
   document.documentElement.dir = next === 'he' ? 'rtl' : 'ltr';
   const currentSystem = pageBody.dataset.system || 'digestive';
   activeSystemTitle.textContent = systems[currentSystem].title[next];
+  renderHotspots(currentSystem);
+  renderOrganList(currentSystem);
 }
 
 function openOrgan(systemKey, organKey) {
