@@ -139,9 +139,7 @@ function organ(key, x, y, level, heTitle, heText, enTitle, enText) {
 }
 function lang() { return pageBody.dataset.lang || 'he'; }
 function labelFor(item) { return item[lang()][0]; }
-function visibleOrgans(systemKey) {
-  return systems[systemKey].organs.filter(item => detailOrder[item.level] <= detailOrder[currentDetailLevel]);
-}
+function visibleOrgans(systemKey) { return systems[systemKey].organs.filter(item => detailOrder[item.level] <= detailOrder[currentDetailLevel]); }
 function renderTabs() {
   const nav = document.getElementById('systemTabs');
   nav.innerHTML = Object.entries(systems).map(([key, system], index) => `
@@ -194,11 +192,36 @@ function toggleLanguage() {
   document.documentElement.dir = next === 'he' ? 'rtl' : 'ltr';
   refreshAtlasContent();
 }
+function detailLabel(level) {
+  const labels = { basic: { he: 'בסיסי', en: 'Basic' }, medium: { he: 'בינוני', en: 'Medium' }, advanced: { he: 'מתקדם', en: 'Advanced' } };
+  return labels[level][lang()];
+}
+function factFor(item) {
+  if (lang() === 'he') return `עובדה קצרה: ${item.he[0]} הוא חלק ממערכת ${systems[currentSystemKey].title.he}, ולכן אפשר להציגו בלי להעמיס על שאר המערכות.`;
+  return `Quick fact: ${item.en[0]} belongs to the ${systems[currentSystemKey].title.en}, so it can be explored without cluttering the other systems.`;
+}
 function openOrgan(systemKey, organKey) {
-  const item = systems[systemKey].organs.find(organItem => organItem.key === organKey);
+  currentSystemKey = systemKey;
+  const system = systems[systemKey];
+  const item = system.organs.find(organItem => organItem.key === organKey);
   const data = item[lang()];
   modalTitle.textContent = data[0];
-  modalText.textContent = data[1];
+  const labels = lang() === 'he'
+    ? { latin: 'שם באנגלית / לטיני', system: 'מערכת', level: 'רמת פירוט', role: 'תפקיד עיקרי', location: 'מיקום כללי', fact: 'עובדה מעניינת' }
+    : { latin: 'English / Latin name', system: 'System', level: 'Detail level', role: 'Main function', location: 'General location', fact: 'Interesting fact' };
+  const location = lang() === 'he' ? 'מסומן על האיור בהתאם למיקום האנטומי הכללי.' : 'Marked on the illustration according to its general anatomical position.';
+  modalText.innerHTML = `
+    <div class="info-card">
+      <p class="info-summary">${data[1]}</p>
+      <div class="info-grid-card">
+        <div class="info-field"><span class="info-label">${labels.latin}</span><span class="info-value">${item.en[0]}</span></div>
+        <div class="info-field"><span class="info-label">${labels.system}</span><span class="info-value">${system.title[lang()]}</span></div>
+        <div class="info-field"><span class="info-label">${labels.level}</span><span class="info-value">${detailLabel(item.level)}</span></div>
+        <div class="info-field"><span class="info-label">${labels.location}</span><span class="info-value">${location}</span></div>
+      </div>
+      <div class="info-fact"><strong>${labels.fact}:</strong> ${factFor(item)}</div>
+    </div>
+  `;
   modal.showModal();
 }
 function closeOrgan() { modal.close(); }
