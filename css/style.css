@@ -12,8 +12,8 @@
 }
 
 * { box-sizing: border-box; }
-body { margin: 0; padding-top: 68px; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: radial-gradient(circle at top right, rgba(215, 123, 85, .18), transparent 34%), radial-gradient(circle at bottom left, rgba(65, 105, 145, .22), transparent 38%), linear-gradient(135deg, #06080d 0%, var(--bg) 52%, #121722 100%); color: var(--text); line-height: 1.7; }
-.system-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(7, 11, 18, .92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); box-shadow: 0 12px 30px rgba(0,0,0,.38); }
+body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: radial-gradient(circle at top right, rgba(215, 123, 85, .18), transparent 34%), radial-gradient(circle at bottom left, rgba(65, 105, 145, .22), transparent 38%), linear-gradient(135deg, #06080d 0%, var(--bg) 52%, #121722 100%); color: var(--text); line-height: 1.7; }
+.system-nav { position: static; z-index: 20; background: rgba(7, 11, 18, .92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); box-shadow: 0 12px 30px rgba(0,0,0,.38); }
 .nav-inner { width: min(1180px, calc(100% - 28px)); margin: 0 auto; padding: 10px 0; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: thin; }
 .tab, button { border: 0; border-radius: 999px; padding: 12px 18px; font-weight: 800; cursor: pointer; font-size: 1rem; transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease, background .18s ease; }
 button:hover { transform: translateY(-2px); }
@@ -67,4 +67,4 @@ dialog::backdrop { background: rgba(0, 0, 0, .72); }
 .en { direction: ltr; text-align: left; }
 [data-lang="en"] .he-text { display: none; }
 [data-lang="he"] .en-text { display: none; }
-@media (max-width: 900px) { body { padding-top: 72px; } header, .info-grid, .info-grid-card { grid-template-columns: 1fr; } header { min-height: auto; } .page { padding-top: 14px; } }
+@media (max-width: 900px) { header, .info-grid, .info-grid-card { grid-template-columns: 1fr; } header { min-height: auto; } .page { padding-top: 14px; } }
