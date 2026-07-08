@@ -16,13 +16,10 @@
       <section class="panel">
         <div class="eyebrow he-text">אטלס לימודי אינטראקטיבי</div>
         <div class="eyebrow en-text en">Interactive Educational Atlas</div>
-
         <h1 class="he-text">אטלס גוף האדם</h1>
         <h1 class="en-text en">Human Body Interactive Atlas</h1>
-
         <p class="lead he-text">כל טאב מציג איור אנטומי נפרד. כדי למנוע צפיפות, אפשר לבחור רמת פירוט: בסיסי, בינוני או מתקדם.</p>
         <p class="lead en-text en">Each tab displays a separate anatomical illustration. To avoid clutter, you can choose a detail level: basic, medium, or advanced.</p>
-
         <div class="actions">
           <button class="primary" onclick="scrollToAtlas()"><span class="he-text">התחל לחקור</span><span class="en-text">Start Exploring</span></button>
           <button class="secondary" onclick="toggleLanguage()"><span class="he-text">English</span><span class="en-text">עברית</span></button>
@@ -31,13 +28,11 @@
 
       <section class="atlas-card" id="atlas">
         <div class="active-system" id="activeSystemTitle"></div>
-
         <div class="detail-controls" aria-label="Detail level controls">
           <button class="detail-btn active" data-detail="basic" onclick="setDetailLevel('basic', this)"><span class="he-text">בסיסי</span><span class="en-text">Basic</span></button>
           <button class="detail-btn" data-detail="medium" onclick="setDetailLevel('medium', this)"><span class="he-text">בינוני</span><span class="en-text">Medium</span></button>
           <button class="detail-btn" data-detail="advanced" onclick="setDetailLevel('advanced', this)"><span class="he-text">מתקדם</span><span class="en-text">Advanced</span></button>
         </div>
-
         <div class="atlas-frame" aria-label="Interactive human body image">
           <img id="atlasImage" class="atlas-image" src="images/digestive-system-vintage-anatomy.jpg" alt="Digestive System" />
           <div id="hotspotLayer"></div>
@@ -52,7 +47,7 @@
       <section class="info-grid">
         <article class="mini"><h3 class="he-text">שליטה בעומס</h3><h3 class="en-text en">Clutter Control</h3><p class="he-text">רמות הפירוט מאפשרות להציג יותר מידע רק כשצריך.</p><p class="en-text en">Detail levels reveal more information only when needed.</p></article>
         <article class="mini"><h3 class="he-text">אזורים לחיצים</h3><h3 class="en-text en">Clickable Areas</h3><p class="he-text">כל תמונה כוללת נקודות לחיצה ורשימת איברים.</p><p class="en-text en">Each image includes clickable markers and an organ list.</p></article>
-        <article class="mini"><h3 class="he-text">דו־לשוני</h3><h3 class="en-text en">Bilingual</h3><p class="he-text">כל הממשק וההסברים זמינים בעברית ובאנגלית.</p><p class="en-text en">The interface and explanations are available in Hebrew and English.</p></article>
+        <article class="mini"><h3 class="he-text">כרטיס מידע עשיר</h3><h3 class="en-text en">Rich Info Card</h3><p class="he-text">כל לחיצה פותחת כרטיס עם תפקיד, מערכת, רמת פירוט ועובדה קצרה.</p><p class="en-text en">Each click opens a card with function, system, detail level, and a short fact.</p></article>
       </section>
     </main>
   </div>
@@ -60,7 +55,7 @@
   <dialog id="organModal">
     <div class="modal-content">
       <h2 id="modalTitle"></h2>
-      <p id="modalText"></p>
+      <div id="modalText"></div>
       <button class="primary close" onclick="closeOrgan()"><span class="he-text">סגור</span><span class="en-text">Close</span></button>
     </div>
   </dialog>
