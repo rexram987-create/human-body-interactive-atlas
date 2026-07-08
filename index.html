@@ -20,8 +20,8 @@
         <h1 class="he-text">אטלס גוף האדם</h1>
         <h1 class="en-text en">Human Body Interactive Atlas</h1>
 
-        <p class="lead he-text">כל טאב מציג איור אנטומי נפרד המתאים למערכת הגוף שנבחרה, עם אזורים לחיצים והסברים דו־לשוניים.</p>
-        <p class="lead en-text en">Each tab displays a separate anatomical illustration for the selected body system, with clickable areas and bilingual explanations.</p>
+        <p class="lead he-text">כל טאב מציג איור אנטומי נפרד. כדי למנוע צפיפות, אפשר לבחור רמת פירוט: בסיסי, בינוני או מתקדם.</p>
+        <p class="lead en-text en">Each tab displays a separate anatomical illustration. To avoid clutter, you can choose a detail level: basic, medium, or advanced.</p>
 
         <div class="actions">
           <button class="primary" onclick="scrollToAtlas()"><span class="he-text">התחל לחקור</span><span class="en-text">Start Exploring</span></button>
@@ -31,36 +31,28 @@
 
       <section class="atlas-card" id="atlas">
         <div class="active-system" id="activeSystemTitle"></div>
+
+        <div class="detail-controls" aria-label="Detail level controls">
+          <button class="detail-btn active" data-detail="basic" onclick="setDetailLevel('basic', this)"><span class="he-text">בסיסי</span><span class="en-text">Basic</span></button>
+          <button class="detail-btn" data-detail="medium" onclick="setDetailLevel('medium', this)"><span class="he-text">בינוני</span><span class="en-text">Medium</span></button>
+          <button class="detail-btn" data-detail="advanced" onclick="setDetailLevel('advanced', this)"><span class="he-text">מתקדם</span><span class="en-text">Advanced</span></button>
+        </div>
+
         <div class="atlas-frame" aria-label="Interactive human body image">
           <img id="atlasImage" class="atlas-image" src="images/digestive-system-vintage-anatomy.jpg" alt="Digestive System" />
           <div id="hotspotLayer"></div>
         </div>
         <div class="organ-list" id="organList" aria-label="Clickable organ list"></div>
-        <p class="atlas-note he-text">אפשר ללחוץ על הנקודות שבתמונה או על שמות האיברים שמתחתיה.</p>
-        <p class="atlas-note en-text en">You can click the markers on the image or the organ names below it.</p>
+        <p class="atlas-note he-text">בחר רמת פירוט. ברמה בסיסית יופיעו מעט איברים בלבד, כדי שהמסך יישאר נקי.</p>
+        <p class="atlas-note en-text en">Choose a detail level. Basic mode shows only a few organs so the screen stays clean.</p>
       </section>
     </header>
 
     <main>
       <section class="info-grid">
-        <article class="mini">
-          <h3 class="he-text">תמונות נפרדות</h3>
-          <h3 class="en-text en">Separate Images</h3>
-          <p class="he-text">כל טאב טוען איור ייעודי למערכת הגוף שלו.</p>
-          <p class="en-text en">Each tab loads a dedicated illustration for its body system.</p>
-        </article>
-        <article class="mini">
-          <h3 class="he-text">אזורים לחיצים</h3>
-          <h3 class="en-text en">Clickable Areas</h3>
-          <p class="he-text">לכל תמונה יש נקודות לחיצה ורשימת איברים משלה.</p>
-          <p class="en-text en">Each image has its own clickable markers and organ list.</p>
-        </article>
-        <article class="mini">
-          <h3 class="he-text">מבנה מסודר</h3>
-          <h3 class="en-text en">Organized Structure</h3>
-          <p class="he-text">הקוד הופרד לקבצי CSS ו־JavaScript כדי שיהיה קל להרחיב את האתר.</p>
-          <p class="en-text en">The code is separated into CSS and JavaScript files so the site can grow easily.</p>
-        </article>
+        <article class="mini"><h3 class="he-text">שליטה בעומס</h3><h3 class="en-text en">Clutter Control</h3><p class="he-text">רמות הפירוט מאפשרות להציג יותר מידע רק כשצריך.</p><p class="en-text en">Detail levels reveal more information only when needed.</p></article>
+        <article class="mini"><h3 class="he-text">אזורים לחיצים</h3><h3 class="en-text en">Clickable Areas</h3><p class="he-text">כל תמונה כוללת נקודות לחיצה ורשימת איברים.</p><p class="en-text en">Each image includes clickable markers and an organ list.</p></article>
+        <article class="mini"><h3 class="he-text">דו־לשוני</h3><h3 class="en-text en">Bilingual</h3><p class="he-text">כל הממשק וההסברים זמינים בעברית ובאנגלית.</p><p class="en-text en">The interface and explanations are available in Hebrew and English.</p></article>
       </section>
     </main>
   </div>
