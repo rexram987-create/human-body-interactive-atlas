@@ -13,11 +13,12 @@
 
 * { box-sizing: border-box; }
 body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: radial-gradient(circle at top right, rgba(215, 123, 85, .18), transparent 34%), radial-gradient(circle at bottom left, rgba(65, 105, 145, .22), transparent 38%), linear-gradient(135deg, #06080d 0%, var(--bg) 52%, #121722 100%); color: var(--text); line-height: 1.7; }
+a { text-decoration: none; }
 .system-nav { position: static; z-index: 20; background: rgba(7, 11, 18, .92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); box-shadow: 0 12px 30px rgba(0,0,0,.38); }
 .nav-inner { width: min(1180px, calc(100% - 28px)); margin: 0 auto; padding: 10px 0; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: thin; }
 .tab, button { border: 0; border-radius: 999px; padding: 12px 18px; font-weight: 800; cursor: pointer; font-size: 1rem; transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease, background .18s ease; }
-button:hover { transform: translateY(-2px); }
-.tab { white-space: nowrap; background: rgba(255,255,255,.06); color: var(--muted); border: 1px solid rgba(240,179,106,.14); }
+button:hover, a.primary:hover, a.tab:hover { transform: translateY(-2px); }
+.tab { white-space: nowrap; background: rgba(255,255,255,.06); color: var(--muted); border: 1px solid rgba(240,179,106,.14); display: inline-flex; align-items: center; }
 .tab.active { color: #160f0a; background: linear-gradient(135deg, var(--accent), var(--accent-2)); border-color: transparent; box-shadow: 0 10px 24px rgba(215, 123, 85, .22); }
 .page { width: min(1180px, calc(100% - 28px)); margin: 0 auto; padding: 28px 0 48px; }
 header { display: grid; grid-template-columns: 0.88fr 1.12fr; gap: 24px; align-items: center; min-height: calc(90vh - 58px); }
@@ -27,7 +28,7 @@ header { display: grid; grid-template-columns: 0.88fr 1.12fr; gap: 24px; align-i
 h1 { margin: 0 0 14px; font-size: clamp(2rem, 5.4vw, 4.7rem); line-height: 1.08; }
 .lead { font-size: clamp(1.05rem, 2vw, 1.28rem); color: var(--muted); margin: 0 0 20px; }
 .actions { display: flex; gap: 10px; flex-wrap: wrap; }
-.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #17100b; box-shadow: 0 12px 26px rgba(215, 123, 85, .24); }
+.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #17100b; box-shadow: 0 12px 26px rgba(215, 123, 85, .24); display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; padding: 12px 18px; font-weight: 900; }
 .secondary { background: rgba(255, 255, 255, 0.07); color: var(--accent-2); border: 1px solid var(--border); }
 .atlas-card { padding: clamp(12px, 2vw, 22px); position: relative; }
 .active-system { margin: 0 auto 12px; text-align: center; color: var(--accent-2); font-weight: 900; }
@@ -66,8 +67,14 @@ dialog::backdrop { background: rgba(0, 0, 0, .72); }
 .info-label { display: block; color: var(--accent-2); font-weight: 900; font-size: .86rem; margin-bottom: 4px; }
 .info-value { color: var(--text); }
 .info-fact { background: rgba(240,179,106,.10); border: 1px solid rgba(240,179,106,.22); border-radius: 18px; padding: 14px; color: var(--muted); }
+.organ-detail-link { margin-top: 6px; width: fit-content; }
 .close { margin-top: 18px; }
+.organ-page { display: grid; gap: 18px; }
+.organ-hero { display: grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: center; }
+.organ-page-image-wrap { border-radius: 24px; overflow: hidden; border: 1px solid var(--border); background: rgba(255,255,255,.05); box-shadow: 0 18px 42px rgba(0,0,0,.30); }
+.organ-page-image { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+.organ-sections { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
 .en { direction: ltr; text-align: left; }
 [data-lang="en"] .he-text { display: none; }
 [data-lang="he"] .en-text { display: none; }
-@media (max-width: 900px) { header, .info-grid, .info-grid-card, .info-top { grid-template-columns: 1fr; } .organ-image-wrap { max-width: 240px; margin: 0 auto; } header { min-height: auto; } .page { padding-top: 14px; } }
+@media (max-width: 900px) { header, .info-grid, .info-grid-card, .info-top, .organ-hero, .organ-sections { grid-template-columns: 1fr; } .organ-image-wrap { max-width: 240px; margin: 0 auto; } .organ-page-image-wrap { max-width: 320px; margin: 0 auto; } header { min-height: auto; } .page { padding-top: 14px; } }
