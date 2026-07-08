@@ -6,14 +6,14 @@
   <title>אטלס גוף האדם | Human Body Interactive Atlas</title>
   <style>
     :root {
-      --bg: #f6efe3;
-      --card: #fffaf2;
-      --text: #2d241b;
-      --muted: #6c5a48;
+      --bg: #f5ead8;
+      --paper: #fffaf1;
+      --text: #2b2118;
+      --muted: #705d4b;
       --accent: #8b2f2f;
       --accent-2: #c07a3f;
-      --border: rgba(80, 52, 30, 0.18);
-      --shadow: 0 18px 45px rgba(69, 43, 20, 0.18);
+      --border: rgba(85, 55, 30, 0.18);
+      --shadow: 0 20px 55px rgba(64, 38, 18, 0.18);
     }
 
     * { box-sizing: border-box; }
@@ -21,282 +21,273 @@
     body {
       margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #fff7ea 0%, var(--bg) 55%, #ead9bf 100%);
+      background: radial-gradient(circle at top, #fff8ec 0%, var(--bg) 60%, #e6d0af 100%);
       color: var(--text);
       line-height: 1.7;
     }
 
+    .page {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
     header {
-      min-height: 78vh;
       display: grid;
-      place-items: center;
-      padding: 2rem;
-    }
-
-    .hero {
-      width: min(1120px, 100%);
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 2rem;
+      grid-template-columns: 0.88fr 1.12fr;
+      gap: 24px;
       align-items: center;
+      min-height: 90vh;
     }
 
-    .hero-text, .preview, .section-card {
-      background: rgba(255, 250, 242, 0.82);
+    .panel, .atlas-card {
+      background: rgba(255, 250, 241, 0.88);
       border: 1px solid var(--border);
       border-radius: 28px;
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
     }
 
-    .hero-text { padding: clamp(1.4rem, 4vw, 3rem); }
+    .panel { padding: clamp(22px, 4vw, 44px); }
 
     .eyebrow {
       color: var(--accent);
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      margin-bottom: 0.5rem;
+      font-weight: 900;
+      margin-bottom: 8px;
     }
 
     h1 {
-      font-size: clamp(2.2rem, 6vw, 4.8rem);
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 5.4vw, 4.7rem);
       line-height: 1.08;
-      margin: 0 0 1rem;
     }
 
-    .subtitle {
-      font-size: clamp(1.05rem, 2vw, 1.35rem);
+    .lead {
+      font-size: clamp(1.05rem, 2vw, 1.28rem);
       color: var(--muted);
-      margin-bottom: 1.5rem;
+      margin: 0 0 20px;
     }
 
-    .actions {
-      display: flex;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-      align-items: center;
-    }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
-    button, .link-button {
+    button {
       border: 0;
       border-radius: 999px;
-      padding: 0.9rem 1.25rem;
-      cursor: pointer;
+      padding: 12px 18px;
       font-weight: 800;
+      cursor: pointer;
       font-size: 1rem;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
     }
 
-    button:hover, .link-button:hover { transform: translateY(-2px); }
+    button:hover { transform: translateY(-2px); }
 
     .primary {
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       color: white;
-      box-shadow: 0 10px 25px rgba(139, 47, 47, 0.25);
+      box-shadow: 0 12px 24px rgba(139, 47, 47, .24);
     }
 
     .secondary {
-      background: #fff3df;
+      background: #fff1dc;
       color: var(--accent);
       border: 1px solid var(--border);
     }
 
-    .preview {
-      padding: 1rem;
-      display: grid;
-      place-items: center;
-      min-height: 560px;
+    .atlas-card {
+      padding: clamp(12px, 2vw, 22px);
       position: relative;
+    }
+
+    .atlas-frame {
+      position: relative;
+      width: min(620px, 100%);
+      margin: 0 auto;
+      background: #f7ead5;
+      border-radius: 22px;
       overflow: hidden;
+      border: 1px solid rgba(90, 60, 34, .22);
     }
 
-    .body-card {
-      width: min(330px, 90%);
-      aspect-ratio: 0.45;
-      border-radius: 160px 160px 90px 90px;
-      background: linear-gradient(180deg, #f1c4a8, #e5a985 58%, #d99373);
-      position: relative;
-      box-shadow: inset 0 0 0 6px rgba(255,255,255,0.35), 0 20px 40px rgba(73, 37, 16, 0.2);
+    .atlas-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      filter: contrast(1.03) saturate(1.02);
     }
 
-    .head {
+    .hotspot {
       position: absolute;
-      top: -86px;
-      left: 50%;
-      translate: -50% 0;
-      width: 138px;
-      height: 150px;
-      border-radius: 50% 50% 44% 44%;
-      background: #efc3a4;
-      border: 5px solid rgba(255,255,255,0.45);
+      translate: -50% -50%;
+      width: clamp(18px, 3.2vw, 28px);
+      height: clamp(18px, 3.2vw, 28px);
+      padding: 0;
+      border-radius: 50%;
+      background: rgba(139, 47, 47, 0.42);
+      border: 2px solid rgba(255, 244, 220, 0.86);
+      box-shadow: 0 0 0 3px rgba(139, 47, 47, .12), inset 0 0 0 2px rgba(255,255,255,.25);
+      color: transparent;
+      z-index: 2;
     }
 
-    .organ {
+    .hotspot::after {
+      content: "";
       position: absolute;
-      border: 3px solid rgba(255,255,255,0.75);
-      display: grid;
-      place-items: center;
-      color: #fff;
-      font-weight: 900;
-      box-shadow: 0 10px 18px rgba(60, 24, 15, 0.2);
+      inset: -7px;
+      border-radius: 50%;
+      background: rgba(255, 230, 185, .12);
+      opacity: 0;
+      transition: opacity .18s ease;
     }
 
-    .organ:hover { outline: 4px solid rgba(255, 245, 200, 0.9); }
-    .brain { top: -58px; left: 50%; translate: -50% 0; width: 80px; height: 50px; background: #75614f; border-radius: 50%; }
-    .lungs { top: 105px; left: 50%; translate: -50% 0; width: 170px; height: 145px; background: #8fa08b; border-radius: 45% 45% 35% 35%; }
-    .heart { top: 150px; left: 50%; translate: -50% 0; width: 78px; height: 88px; background: #b83935; border-radius: 50% 50% 42% 42%; z-index: 2; }
-    .liver { top: 250px; right: 38px; width: 145px; height: 78px; background: #8b1f1f; border-radius: 55% 45% 40% 45%; }
-    .stomach { top: 325px; left: 52px; width: 115px; height: 105px; background: #e8d7c1; color: #69452a; border-radius: 55% 45% 60% 40%; }
-    .intestines { top: 450px; left: 50%; translate: -50% 0; width: 170px; height: 120px; background: #d88477; border-radius: 36%; }
-
-    main {
-      width: min(1120px, calc(100% - 2rem));
-      margin: 0 auto 4rem;
-      display: grid;
-      gap: 1.25rem;
+    .hotspot:hover,
+    .hotspot:focus-visible {
+      background: rgba(139, 47, 47, 0.70);
+      outline: none;
+      box-shadow: 0 0 0 6px rgba(255, 230, 185, .25), 0 8px 20px rgba(80,35,22,.18);
     }
 
-    .section-card { padding: clamp(1.2rem, 3vw, 2rem); }
+    .hotspot:hover::after,
+    .hotspot:focus-visible::after { opacity: 1; }
 
-    .grid {
+    .atlas-note {
+      margin: 12px auto 0;
+      color: var(--muted);
+      font-size: .95rem;
+      text-align: center;
+    }
+
+    main { display: grid; gap: 18px; }
+
+    .info-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
+      gap: 14px;
     }
 
-    .mini-card {
-      background: #fff5e6;
+    .mini {
+      background: rgba(255, 250, 241, .9);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 1rem;
+      border-radius: 22px;
+      padding: 18px;
     }
 
-    .mini-card h3 { margin-top: 0; color: var(--accent); }
+    .mini h3 { margin: 0 0 8px; color: var(--accent); }
+    .mini p { margin: 0; color: var(--muted); }
 
     dialog {
       border: 0;
       border-radius: 24px;
-      width: min(520px, calc(100% - 2rem));
-      padding: 0;
-      box-shadow: var(--shadow);
-      background: var(--card);
+      width: min(520px, calc(100% - 28px));
+      background: var(--paper);
       color: var(--text);
+      box-shadow: var(--shadow);
+      padding: 0;
     }
 
-    dialog::backdrop { background: rgba(37, 24, 13, 0.55); }
+    dialog::backdrop { background: rgba(36, 24, 14, .56); }
 
-    .modal-content { padding: 1.5rem; }
-    .modal-title { margin: 0 0 0.4rem; color: var(--accent); }
-    .close { margin-top: 1rem; }
+    .modal-content { padding: 24px; }
+    .modal-content h2 { margin: 0 0 8px; color: var(--accent); }
+    .modal-content p { margin: 0; color: var(--muted); }
+    .close { margin-top: 18px; }
 
     .en { direction: ltr; text-align: left; }
     [data-lang="en"] .he-text { display: none; }
     [data-lang="he"] .en-text { display: none; }
 
-    @media (max-width: 850px) {
-      .hero, .grid { grid-template-columns: 1fr; }
-      .preview { min-height: 520px; }
-      header { padding: 1rem; }
+    @media (max-width: 900px) {
+      header, .info-grid { grid-template-columns: 1fr; }
+      header { min-height: auto; }
+      .page { padding-top: 14px; }
     }
   </style>
 </head>
 <body data-lang="he">
-  <header>
-    <section class="hero">
-      <div class="hero-text">
+  <div class="page">
+    <header>
+      <section class="panel">
         <div class="eyebrow he-text">אטלס לימודי אינטראקטיבי</div>
-        <div class="eyebrow en-text">Interactive Educational Atlas</div>
+        <div class="eyebrow en-text en">Interactive Educational Atlas</div>
 
         <h1 class="he-text">אטלס גוף האדם</h1>
         <h1 class="en-text en">Human Body Interactive Atlas</h1>
 
-        <p class="subtitle he-text">דף בית דו־לשוני לאתר לימודי שבו ניתן ללחוץ על איברי הגוף ולקבל הסבר קצר, ברור ומעוצב בחלון צף.</p>
-        <p class="subtitle en-text en">A bilingual educational homepage for an interactive atlas where visitors can click body organs and open a clear, elegant information popup.</p>
+        <p class="lead he-text">תמונה אנטומית ברורה, עם אזורי לחיצה עדינים שמשתלבים בתוך האיור ולא מעמיסים על המבקר.</p>
+        <p class="lead en-text en">A clear anatomical image with subtle clickable areas that blend into the illustration without overwhelming the visitor.</p>
 
         <div class="actions">
-          <button class="primary" onclick="scrollToDemo()"><span class="he-text">התחל הדגמה</span><span class="en-text">Start Demo</span></button>
+          <button class="primary" onclick="scrollToAtlas()"><span class="he-text">התחל לחקור</span><span class="en-text">Start Exploring</span></button>
           <button class="secondary" onclick="toggleLanguage()"><span class="he-text">English</span><span class="en-text">עברית</span></button>
         </div>
-      </div>
+      </section>
 
-      <div class="preview" id="demo" aria-label="Interactive body demo">
-        <div class="body-card">
-          <div class="head"></div>
-          <button class="organ brain" onclick="openOrgan('brain')">6</button>
-          <button class="organ lungs" onclick="openOrgan('lungs')">13</button>
-          <button class="organ heart" onclick="openOrgan('heart')">12</button>
-          <button class="organ liver" onclick="openOrgan('liver')">14</button>
-          <button class="organ stomach" onclick="openOrgan('stomach')">17</button>
-          <button class="organ intestines" onclick="openOrgan('intestines')">20</button>
+      <section class="atlas-card" id="atlas">
+        <div class="atlas-frame" aria-label="Interactive human body image">
+          <img class="atlas-image" src="images/human-body.jpg" alt="Historical anatomical illustration of the human body" />
+
+          <button class="hotspot" style="left:50%; top:10%;" onclick="openOrgan('brain')" aria-label="Brain"></button>
+          <button class="hotspot" style="left:48%; top:31%;" onclick="openOrgan('lungs')" aria-label="Lungs"></button>
+          <button class="hotspot" style="left:51%; top:36%;" onclick="openOrgan('heart')" aria-label="Heart"></button>
+          <button class="hotspot" style="left:57%; top:46%;" onclick="openOrgan('liver')" aria-label="Liver"></button>
+          <button class="hotspot" style="left:47%; top:50%;" onclick="openOrgan('stomach')" aria-label="Stomach"></button>
+          <button class="hotspot" style="left:50%; top:65%;" onclick="openOrgan('intestines')" aria-label="Intestines"></button>
         </div>
-      </div>
-    </section>
-  </header>
+        <p class="atlas-note he-text">הנקודות עדינות בכוונה: הן מסמנות איברים בלי להסתיר את התמונה.</p>
+        <p class="atlas-note en-text en">The markers are intentionally subtle: they identify organs without hiding the image.</p>
+      </section>
+    </header>
 
-  <main>
-    <section class="section-card">
-      <h2 class="he-text">מה האתר יעשה?</h2>
-      <h2 class="en-text en">What will this website do?</h2>
-      <div class="grid">
-        <article class="mini-card">
-          <h3 class="he-text">איברים לחיצים</h3>
-          <h3 class="en-text en">Clickable Organs</h3>
-          <p class="he-text">כל איבר בתמונה יקבל נקודת לחיצה מדויקת.</p>
-          <p class="en-text en">Each organ in the image will receive an accurate clickable hotspot.</p>
+    <main>
+      <section class="info-grid">
+        <article class="mini">
+          <h3 class="he-text">תמונה ברורה</h3>
+          <h3 class="en-text en">Clear Image</h3>
+          <p class="he-text">התמונה מוצגת בגודל גדול ובמרכז הדף.</p>
+          <p class="en-text en">The image is shown large and centered on the page.</p>
         </article>
-        <article class="mini-card">
-          <h3 class="he-text">חלון צף</h3>
-          <h3 class="en-text en">Popup Window</h3>
-          <p class="he-text">לחיצה תפתח חלון עם שם האיבר, תפקידו ועובדות קצרות.</p>
-          <p class="en-text en">A click opens a popup with the organ name, function, and short facts.</p>
+        <article class="mini">
+          <h3 class="he-text">מעט סימונים</h3>
+          <h3 class="en-text en">Few Markers</h3>
+          <p class="he-text">בשלב הראשון מוצגים רק איברים מרכזיים כדי למנוע עומס.</p>
+          <p class="en-text en">Only key organs are shown first to avoid visual overload.</p>
         </article>
-        <article class="mini-card">
-          <h3 class="he-text">עברית ואנגלית</h3>
-          <h3 class="en-text en">Hebrew and English</h3>
-          <p class="he-text">האתר בנוי מראש לתמיכה בשתי שפות.</p>
-          <p class="en-text en">The site is designed from the start to support two languages.</p>
+        <article class="mini">
+          <h3 class="he-text">חוויה דו־לשונית</h3>
+          <h3 class="en-text en">Bilingual Experience</h3>
+          <p class="he-text">כל הסבר קיים בעברית ובאנגלית.</p>
+          <p class="en-text en">Every explanation is available in Hebrew and English.</p>
         </article>
-      </div>
-    </section>
-
-    <section class="section-card">
-      <h2 class="he-text">מקור התמונה העתידית</h2>
-      <h2 class="en-text en">Future Image Source</h2>
-      <p class="he-text">בשלב הבא נוכל לשלב את האיור ההיסטורי: <strong>Internal Organs of the Human Body from The Household Physician, 1905</strong>, המסומן כנחלת הכלל ב־Wikimedia Commons.</p>
-      <p class="en-text en">In the next step, we can integrate the historical illustration: <strong>Internal Organs of the Human Body from The Household Physician, 1905</strong>, marked as Public Domain on Wikimedia Commons.</p>
-    </section>
-  </main>
+      </section>
+    </main>
+  </div>
 
   <dialog id="organModal">
     <div class="modal-content">
-      <h2 class="modal-title" id="modalTitle"></h2>
+      <h2 id="modalTitle"></h2>
       <p id="modalText"></p>
       <button class="primary close" onclick="closeOrgan()"><span class="he-text">סגור</span><span class="en-text">Close</span></button>
     </div>
   </dialog>
 
   <script>
-    const body = document.body;
+    const pageBody = document.body;
     const modal = document.getElementById('organModal');
     const modalTitle = document.getElementById('modalTitle');
     const modalText = document.getElementById('modalText');
 
     const organs = {
       brain: {
-        he: ['המוח', 'המוח הוא מרכז הבקרה של הגוף. הוא מעבד מידע, מפעיל חשיבה, זיכרון, רגשות ותיאום פעולות.'],
-        en: ['Brain', 'The brain is the body’s control center. It processes information and supports thought, memory, emotion, and coordination.']
+        he: ['המוח', 'המוח הוא מרכז הבקרה של הגוף. הוא אחראי על חשיבה, זיכרון, רגשות, תנועה ותיאום פעולות.'],
+        en: ['Brain', 'The brain is the body’s control center. It supports thought, memory, emotion, movement, and coordination.']
       },
       lungs: {
-        he: ['הריאות', 'הריאות מאפשרות חילוף גזים: כניסת חמצן לגוף ויציאת פחמן דו־חמצני החוצה.'],
-        en: ['Lungs', 'The lungs enable gas exchange: oxygen enters the body and carbon dioxide leaves it.']
+        he: ['הריאות', 'הריאות מאפשרות נשימה וחילוף גזים: כניסת חמצן לגוף ויציאת פחמן דו־חמצני.'],
+        en: ['Lungs', 'The lungs support breathing and gas exchange: oxygen enters the body and carbon dioxide leaves it.']
       },
       heart: {
         he: ['הלב', 'הלב הוא משאבה שרירית המזרימה דם לכל חלקי הגוף ומסייעת בהובלת חמצן וחומרי מזון.'],
-        en: ['Heart', 'The heart is a muscular pump that moves blood throughout the body and helps transport oxygen and nutrients.']
+        en: ['Heart', 'The heart is a muscular pump that circulates blood and helps transport oxygen and nutrients.']
       },
       liver: {
         he: ['הכבד', 'הכבד מסייע בעיבוד חומרים, פירוק רעלים, אגירת אנרגיה וייצור מרה.'],
@@ -312,31 +303,26 @@
       }
     };
 
-    function currentLang() {
-      return body.dataset.lang || 'he';
-    }
+    function lang() { return pageBody.dataset.lang || 'he'; }
 
     function toggleLanguage() {
-      const next = currentLang() === 'he' ? 'en' : 'he';
-      body.dataset.lang = next;
+      const next = lang() === 'he' ? 'en' : 'he';
+      pageBody.dataset.lang = next;
       document.documentElement.lang = next;
       document.documentElement.dir = next === 'he' ? 'rtl' : 'ltr';
     }
 
     function openOrgan(key) {
-      const lang = currentLang();
-      const data = organs[key][lang];
+      const data = organs[key][lang()];
       modalTitle.textContent = data[0];
       modalText.textContent = data[1];
       modal.showModal();
     }
 
-    function closeOrgan() {
-      modal.close();
-    }
+    function closeOrgan() { modal.close(); }
 
-    function scrollToDemo() {
-      document.getElementById('demo').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    function scrollToAtlas() {
+      document.getElementById('atlas').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   </script>
 </body>
