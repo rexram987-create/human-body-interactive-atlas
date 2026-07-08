@@ -7,8 +7,8 @@ const atlasImage = document.getElementById('atlasImage');
 const hotspotLayer = document.getElementById('hotspotLayer');
 const organList = document.getElementById('organList');
 
-let currentDetail = 'basic';
-
+let currentSystemKey = 'digestive';
+let currentDetailLevel = 'basic';
 const detailOrder = { basic: 1, medium: 2, advanced: 3 };
 
 const systems = {
@@ -16,111 +16,132 @@ const systems = {
     image: 'images/digestive-system-vintage-anatomy.jpg',
     title: { he: 'מערכת העיכול', en: 'Digestive System' },
     organs: [
-      { level: 'basic', key: 'mouth', x: 50, y: 12, he: ['הפה', 'תחילת מערכת העיכול. המזון נלעס ומתערבב עם רוק כדי להתחיל את פירוקו.'], en: ['Mouth', 'The beginning of the digestive system. Food is chewed and mixed with saliva to begin digestion.'] },
-      { level: 'basic', key: 'esophagus', x: 50, y: 26, he: ['הוושט', 'צינור שרירי שמעביר את המזון מן הלוע אל הקיבה.'], en: ['Esophagus', 'A muscular tube that moves food from the throat to the stomach.'] },
-      { level: 'basic', key: 'stomach', x: 45, y: 43, he: ['הקיבה', 'הקיבה מערבבת את המזון ומתחילה לפרק אותו בעזרת מיצי עיכול.'], en: ['Stomach', 'The stomach mixes food and begins breaking it down with digestive juices.'] },
-      { level: 'basic', key: 'liver', x: 58, y: 38, he: ['הכבד', 'הכבד מסייע בעיבוד חומרים, פירוק רעלים, אגירת אנרגיה וייצור מרה.'], en: ['Liver', 'The liver helps process substances, break down toxins, store energy, and produce bile.'] },
-      { level: 'basic', key: 'intestines', x: 50, y: 64, he: ['המעיים', 'המעיים ממשיכים את תהליך העיכול וסופגים חומרים מזינים ומים אל הגוף.'], en: ['Intestines', 'The intestines continue digestion and absorb nutrients and water into the body.'] },
-      { level: 'medium', key: 'pancreas', x: 53, y: 49, he: ['הלבלב', 'הלבלב מייצר אנזימי עיכול וגם הורמונים חשובים לוויסות סוכר בדם.'], en: ['Pancreas', 'The pancreas produces digestive enzymes and hormones that help regulate blood sugar.'] },
-      { level: 'medium', key: 'gallbladder', x: 62, y: 43, he: ['כיס המרה', 'כיס המרה אוגר מרה ומסייע בעיכול שומנים.'], en: ['Gallbladder', 'The gallbladder stores bile and helps digest fats.'] },
-      { level: 'advanced', key: 'appendix', x: 57, y: 72, he: ['התוספתן', 'התוספתן הוא שלוחה קטנה של המעי הגס, עם תפקיד חיסוני מסוים.'], en: ['Appendix', 'The appendix is a small pouch attached to the large intestine and has some immune functions.'] }
+      organ('mouth', 50, 12, 'basic', 'הפה', 'תחילת מערכת העיכול. המזון נלעס ומתערבב עם רוק.', 'Mouth', 'The beginning of the digestive system. Food is chewed and mixed with saliva.'),
+      organ('esophagus', 50, 26, 'basic', 'הוושט', 'צינור שרירי שמעביר את המזון מן הלוע אל הקיבה.', 'Esophagus', 'A muscular tube that moves food from the throat to the stomach.'),
+      organ('stomach', 45, 43, 'basic', 'הקיבה', 'הקיבה מערבבת את המזון ומתחילה לפרק אותו בעזרת מיצי עיכול.', 'Stomach', 'The stomach mixes food and begins breaking it down with digestive juices.'),
+      organ('liver', 58, 38, 'basic', 'הכבד', 'הכבד מסייע בעיבוד חומרים, פירוק רעלים, אגירת אנרגיה וייצור מרה.', 'Liver', 'The liver processes substances, breaks down toxins, stores energy, and produces bile.'),
+      organ('intestines', 50, 64, 'basic', 'המעיים', 'המעיים ממשיכים את תהליך העיכול וסופגים חומרים מזינים ומים.', 'Intestines', 'The intestines continue digestion and absorb nutrients and water.'),
+      organ('salivary-glands', 42, 17, 'medium', 'בלוטות הרוק', 'בלוטות הרוק מייצרות רוק שמתחיל את פירוק המזון ומסייע בבליעה.', 'Salivary Glands', 'Salivary glands produce saliva that begins digestion and helps swallowing.'),
+      organ('pancreas', 55, 49, 'medium', 'הלבלב', 'הלבלב מפריש אנזימי עיכול ומסייע בוויסות רמות הסוכר בדם.', 'Pancreas', 'The pancreas releases digestive enzymes and helps regulate blood sugar.'),
+      organ('gallbladder', 62, 43, 'medium', 'כיס המרה', 'כיס המרה אוגר מרה ומפריש אותה לעיכול שומנים.', 'Gallbladder', 'The gallbladder stores bile and releases it to help digest fats.'),
+      organ('appendix', 57, 72, 'advanced', 'התוספתן', 'התוספתן הוא שלוחה קטנה של המעי הגס ויש לו תפקיד חיסוני מסוים.', 'Appendix', 'The appendix is a small extension of the large intestine with some immune function.'),
+      organ('rectum', 50, 82, 'advanced', 'החלחולת', 'החלחולת אוגרת פסולת לפני יציאתה מן הגוף.', 'Rectum', 'The rectum stores waste before it leaves the body.')
     ]
   },
   respiratory: {
     image: 'images/respiratory-system-vintage-anatomy.jpg',
     title: { he: 'מערכת הנשימה', en: 'Respiratory System' },
     organs: [
-      { level: 'basic', key: 'nasal', x: 50, y: 12, he: ['חלל האף', 'חלל האף מסנן, מחמם ומלחלח את האוויר לפני כניסתו לריאות.'], en: ['Nasal Cavity', 'The nasal cavity filters, warms, and humidifies air before it reaches the lungs.'] },
-      { level: 'basic', key: 'trachea', x: 50, y: 31, he: ['קנה הנשימה', 'קנה הנשימה מוביל אוויר מן הגרון אל הסמפונות והריאות.'], en: ['Trachea', 'The trachea carries air from the throat to the bronchi and lungs.'] },
-      { level: 'basic', key: 'lungs', x: 50, y: 48, he: ['הריאות', 'הריאות מאפשרות חילוף גזים: כניסת חמצן ויציאת פחמן דו־חמצני.'], en: ['Lungs', 'The lungs enable gas exchange: oxygen enters and carbon dioxide leaves.'] },
-      { level: 'basic', key: 'diaphragm', x: 50, y: 67, he: ['הסרעפת', 'הסרעפת היא שריר מרכזי בתהליך הנשימה.'], en: ['Diaphragm', 'The diaphragm is a major muscle used in breathing.'] },
-      { level: 'medium', key: 'bronchi', x: 50, y: 39, he: ['הסמפונות', 'הסמפונות מתפצלות מקנה הנשימה ומובילות אוויר אל חלקי הריאות.'], en: ['Bronchi', 'The bronchi branch from the trachea and carry air into the lungs.'] }
+      organ('nasal', 50, 12, 'basic', 'חלל האף', 'חלל האף מסנן, מחמם ומלחלח את האוויר.', 'Nasal Cavity', 'The nasal cavity filters, warms, and humidifies air.'),
+      organ('trachea', 50, 31, 'basic', 'קנה הנשימה', 'קנה הנשימה מוביל אוויר מן הגרון אל הריאות.', 'Trachea', 'The trachea carries air from the throat to the lungs.'),
+      organ('lungs', 50, 48, 'basic', 'הריאות', 'הריאות מאפשרות חילוף גזים: כניסת חמצן ויציאת פחמן דו־חמצני.', 'Lungs', 'The lungs enable gas exchange: oxygen enters and carbon dioxide leaves.'),
+      organ('diaphragm', 50, 67, 'basic', 'הסרעפת', 'הסרעפת היא שריר מרכזי בתהליך הנשימה.', 'Diaphragm', 'The diaphragm is a major muscle used in breathing.'),
+      organ('larynx', 50, 24, 'medium', 'הגרון', 'הגרון משתתף בנשימה ובהפקת קול.', 'Larynx', 'The larynx supports breathing and voice production.'),
+      organ('bronchi', 50, 40, 'medium', 'הסמפונות', 'הסמפונות מתפצלות מקנה הנשימה ומובילות אוויר אל הריאות.', 'Bronchi', 'The bronchi branch from the trachea and carry air into the lungs.'),
+      organ('bronchioles', 56, 52, 'advanced', 'הסימפוניות', 'הסימפוניות הן הסתעפויות קטנות המובילות אוויר לעומק הריאות.', 'Bronchioles', 'Bronchioles are small branches that carry air deeper into the lungs.')
     ]
   },
   circulatory: {
     image: 'images/circulatory-system-vintage-anatomy.jpg',
     title: { he: 'מערכת הדם', en: 'Circulatory System' },
     organs: [
-      { level: 'basic', key: 'heart', x: 51, y: 34, he: ['הלב', 'הלב הוא משאבה שרירית המזרימה דם לכל חלקי הגוף.'], en: ['Heart', 'The heart is a muscular pump that circulates blood throughout the body.'] },
-      { level: 'basic', key: 'aorta', x: 54, y: 29, he: ['אבי העורקים', 'אבי העורקים הוא העורק הראשי היוצא מן הלב ומוביל דם עשיר בחמצן.'], en: ['Aorta', 'The aorta is the main artery that carries oxygen-rich blood from the heart.'] },
-      { level: 'basic', key: 'veins', x: 46, y: 47, he: ['ורידים מרכזיים', 'הוורידים מחזירים דם מן הגוף אל הלב.'], en: ['Major Veins', 'Veins return blood from the body back to the heart.'] },
-      { level: 'medium', key: 'carotid', x: 47, y: 20, he: ['עורקי הצוואר', 'עורקי הצוואר מובילים דם עשיר בחמצן אל המוח והראש.'], en: ['Carotid Arteries', 'The carotid arteries carry oxygen-rich blood to the brain and head.'] }
+      organ('heart', 51, 34, 'basic', 'הלב', 'הלב הוא משאבה שרירית המזרימה דם לכל חלקי הגוף.', 'Heart', 'The heart is a muscular pump that circulates blood throughout the body.'),
+      organ('aorta', 54, 29, 'basic', 'אבי העורקים', 'אבי העורקים הוא העורק הראשי היוצא מן הלב.', 'Aorta', 'The aorta is the main artery leaving the heart.'),
+      organ('veins', 46, 47, 'basic', 'ורידים מרכזיים', 'הוורידים מחזירים דם מן הגוף אל הלב.', 'Major Veins', 'Veins return blood from the body to the heart.'),
+      organ('carotid', 48, 20, 'medium', 'עורקי הצוואר', 'עורקי הצוואר מספקים דם למוח ולראש.', 'Carotid Arteries', 'The carotid arteries supply blood to the brain and head.'),
+      organ('pulmonary', 47, 33, 'medium', 'כלי הדם הריאתיים', 'כלים אלה מעבירים דם בין הלב לריאות.', 'Pulmonary Vessels', 'These vessels carry blood between the heart and lungs.'),
+      organ('leg-vessels', 50, 78, 'advanced', 'כלי הדם ברגליים', 'כלי הדם ברגליים מספקים דם לגפיים התחתונות ומחזירים אותו ללב.', 'Leg Vessels', 'Leg vessels supply and return blood from the lower limbs.')
     ]
   },
   nervous: {
     image: 'images/nervous-system-vintage-anatomy.jpg',
     title: { he: 'מערכת העצבים', en: 'Nervous System' },
     organs: [
-      { level: 'basic', key: 'brain', x: 50, y: 11, he: ['המוח', 'המוח הוא מרכז הבקרה של הגוף ואחראי על חשיבה, זיכרון, תנועה ותחושה.'], en: ['Brain', 'The brain is the body’s control center for thought, memory, movement, and sensation.'] },
-      { level: 'basic', key: 'spinal', x: 50, y: 37, he: ['חוט השדרה', 'חוט השדרה מעביר אותות עצביים בין המוח לשאר הגוף.'], en: ['Spinal Cord', 'The spinal cord carries nerve signals between the brain and the body.'] },
-      { level: 'basic', key: 'nerves', x: 56, y: 60, he: ['עצבים היקפיים', 'העצבים ההיקפיים מקשרים בין מערכת העצבים המרכזית לאיברי הגוף.'], en: ['Peripheral Nerves', 'Peripheral nerves connect the central nervous system with the organs and limbs.'] },
-      { level: 'medium', key: 'cerebellum', x: 50, y: 15, he: ['המוחון', 'המוחון מסייע בתיאום תנועה, יציבה ושיווי משקל.'], en: ['Cerebellum', 'The cerebellum helps coordinate movement, posture, and balance.'] }
+      organ('brain', 50, 11, 'basic', 'המוח', 'המוח הוא מרכז הבקרה של הגוף.', 'Brain', 'The brain is the body’s control center.'),
+      organ('spinal', 50, 37, 'basic', 'חוט השדרה', 'חוט השדרה מעביר אותות עצביים בין המוח לשאר הגוף.', 'Spinal Cord', 'The spinal cord carries nerve signals between the brain and body.'),
+      organ('nerves', 56, 60, 'basic', 'עצבים היקפיים', 'העצבים ההיקפיים מקשרים בין מערכת העצבים המרכזית לאיברי הגוף.', 'Peripheral Nerves', 'Peripheral nerves connect the central nervous system with the body.'),
+      organ('cerebellum', 52, 14, 'medium', 'המוחון', 'המוחון מסייע בקואורדינציה, שיווי משקל ודיוק תנועה.', 'Cerebellum', 'The cerebellum supports coordination, balance, and movement precision.'),
+      organ('sciatic', 45, 70, 'advanced', 'העצב הסיאטי', 'העצב הסיאטי הוא אחד העצבים הגדולים בגוף ומגיע לרגל.', 'Sciatic Nerve', 'The sciatic nerve is one of the largest nerves and extends into the leg.')
     ]
   },
   skeletal: {
     image: 'images/skeletal-system-vintage-anatomy.jpg',
     title: { he: 'מערכת השלד', en: 'Skeletal System' },
     organs: [
-      { level: 'basic', key: 'skull', x: 50, y: 11, he: ['הגולגולת', 'הגולגולת מגינה על המוח ויוצרת את מבנה הראש והפנים.'], en: ['Skull', 'The skull protects the brain and forms the structure of the head and face.'] },
-      { level: 'basic', key: 'ribcage', x: 50, y: 33, he: ['כלוב הצלעות', 'כלוב הצלעות מגן על הלב והריאות.'], en: ['Rib Cage', 'The rib cage protects the heart and lungs.'] },
-      { level: 'basic', key: 'pelvis', x: 50, y: 56, he: ['האגן', 'האגן תומך במשקל הגוף ומחבר בין עמוד השדרה לגפיים התחתונות.'], en: ['Pelvis', 'The pelvis supports body weight and connects the spine to the lower limbs.'] },
-      { level: 'medium', key: 'spine', x: 50, y: 42, he: ['עמוד השדרה', 'עמוד השדרה תומך בגוף ומגן על חוט השדרה.'], en: ['Spine', 'The spine supports the body and protects the spinal cord.'] },
-      { level: 'advanced', key: 'femur', x: 47, y: 70, he: ['עצם הירך', 'עצם הירך היא העצם הארוכה והחזקה ביותר בגוף.'], en: ['Femur', 'The femur is the longest and strongest bone in the body.'] }
+      organ('skull', 50, 11, 'basic', 'הגולגולת', 'הגולגולת מגינה על המוח ויוצרת את מבנה הראש.', 'Skull', 'The skull protects the brain and forms the head structure.'),
+      organ('ribcage', 50, 33, 'basic', 'כלוב הצלעות', 'כלוב הצלעות מגן על הלב והריאות.', 'Rib Cage', 'The rib cage protects the heart and lungs.'),
+      organ('pelvis', 50, 56, 'basic', 'האגן', 'האגן תומך במשקל הגוף ומחבר בין עמוד השדרה לרגליים.', 'Pelvis', 'The pelvis supports body weight and connects the spine to the legs.'),
+      organ('spine', 50, 40, 'medium', 'עמוד השדרה', 'עמוד השדרה תומך בגוף ומגן על חוט השדרה.', 'Spine', 'The spine supports the body and protects the spinal cord.'),
+      organ('humerus', 35, 39, 'medium', 'עצם הזרוע', 'עצם הזרוע היא העצם הארוכה של הזרוע העליונה.', 'Humerus', 'The humerus is the long bone of the upper arm.'),
+      organ('femur', 45, 72, 'advanced', 'עצם הירך', 'עצם הירך היא העצם הארוכה והחזקה ביותר בגוף.', 'Femur', 'The femur is the longest and strongest bone in the body.')
     ]
   },
   muscular: {
     image: 'images/muscular-system-vintage-anatomy.jpg',
     title: { he: 'מערכת השרירים', en: 'Muscular System' },
     organs: [
-      { level: 'basic', key: 'chest-muscles', x: 50, y: 31, he: ['שרירי החזה', 'שרירי החזה מסייעים בתנועת הזרועות ובתמיכה בבית החזה.'], en: ['Chest Muscles', 'The chest muscles help move the arms and support the thorax.'] },
-      { level: 'basic', key: 'abdominals', x: 50, y: 47, he: ['שרירי הבטן', 'שרירי הבטן תומכים בגו ומסייעים בתנועה וביציבה.'], en: ['Abdominal Muscles', 'The abdominal muscles support the trunk and assist movement and posture.'] },
-      { level: 'basic', key: 'leg-muscles', x: 50, y: 76, he: ['שרירי הרגליים', 'שרירי הרגליים מאפשרים הליכה, עמידה וקפיצה.'], en: ['Leg Muscles', 'The leg muscles enable walking, standing, and jumping.'] },
-      { level: 'medium', key: 'shoulder-muscles', x: 40, y: 28, he: ['שרירי הכתף', 'שרירי הכתף מאפשרים תנועה רחבה של הזרוע.'], en: ['Shoulder Muscles', 'The shoulder muscles allow a wide range of arm movement.'] }
+      organ('chest-muscles', 50, 31, 'basic', 'שרירי החזה', 'שרירי החזה מסייעים בתנועת הזרועות ובתמיכה בבית החזה.', 'Chest Muscles', 'Chest muscles help move the arms and support the thorax.'),
+      organ('abdominals', 50, 47, 'basic', 'שרירי הבטן', 'שרירי הבטן תומכים בגו ומסייעים בתנועה וביציבה.', 'Abdominal Muscles', 'Abdominal muscles support the trunk and posture.'),
+      organ('leg-muscles', 50, 76, 'basic', 'שרירי הרגליים', 'שרירי הרגליים מאפשרים הליכה, עמידה וקפיצה.', 'Leg Muscles', 'Leg muscles enable walking, standing, and jumping.'),
+      organ('deltoid', 36, 28, 'medium', 'שריר הדלתא', 'שריר הדלתא משתתף בהרמת הזרוע ובתנועות הכתף.', 'Deltoid', 'The deltoid helps raise the arm and move the shoulder.'),
+      organ('biceps', 34, 40, 'medium', 'שריר הזרוע הדו־ראשי', 'שריר זה מסייע בכיפוף המרפק.', 'Biceps', 'The biceps helps bend the elbow.'),
+      organ('quadriceps', 47, 69, 'advanced', 'הארבע־ראשי', 'קבוצת שרירים מרכזית בקדמת הירך המיישרת את הברך.', 'Quadriceps', 'A major front-thigh muscle group that extends the knee.')
     ]
   },
   urinary: {
     image: 'images/urinary-system-vintage-anatomy.jpg',
     title: { he: 'מערכת השתן', en: 'Urinary System' },
     organs: [
-      { level: 'basic', key: 'kidneys', x: 50, y: 35, he: ['הכליות', 'הכליות מסננות את הדם, מסייעות בוויסות נוזלים ומייצרות שתן.'], en: ['Kidneys', 'The kidneys filter blood, regulate fluids, and produce urine.'] },
-      { level: 'basic', key: 'ureters', x: 50, y: 51, he: ['השופכנים', 'השופכנים מעבירים שתן מן הכליות אל שלפוחית השתן.'], en: ['Ureters', 'The ureters carry urine from the kidneys to the bladder.'] },
-      { level: 'basic', key: 'bladder', x: 50, y: 66, he: ['שלפוחית השתן', 'שלפוחית השתן אוגרת שתן עד להתרוקנות.'], en: ['Urinary Bladder', 'The urinary bladder stores urine until it is released.'] }
+      organ('kidneys', 50, 35, 'basic', 'הכליות', 'הכליות מסננות את הדם, מווסתות נוזלים ומייצרות שתן.', 'Kidneys', 'The kidneys filter blood, regulate fluids, and produce urine.'),
+      organ('ureters', 50, 51, 'basic', 'השופכנים', 'השופכנים מעבירים שתן מן הכליות אל שלפוחית השתן.', 'Ureters', 'The ureters carry urine from the kidneys to the bladder.'),
+      organ('bladder', 50, 66, 'basic', 'שלפוחית השתן', 'שלפוחית השתן אוגרת שתן עד להתרוקנות.', 'Urinary Bladder', 'The bladder stores urine until it is released.'),
+      organ('renal-arteries', 43, 37, 'medium', 'עורקי הכליה', 'עורקי הכליה מובילים דם אל הכליות לצורך סינון.', 'Renal Arteries', 'Renal arteries carry blood to the kidneys for filtration.'),
+      organ('urethra', 50, 75, 'advanced', 'השופכה', 'השופכה מובילה שתן מן השלפוחית אל מחוץ לגוף.', 'Urethra', 'The urethra carries urine from the bladder out of the body.')
     ]
   },
   senses: {
     image: 'images/sense-organs-vintage-anatomy.jpg',
     title: { he: 'איברי החושים', en: 'Sense Organs' },
     organs: [
-      { level: 'basic', key: 'eye', x: 40, y: 19, he: ['העין', 'העין קולטת אור ומאפשרת ראייה.'], en: ['Eye', 'The eye detects light and enables vision.'] },
-      { level: 'basic', key: 'ear', x: 61, y: 34, he: ['האוזן', 'האוזן מאפשרת שמיעה ותורמת לשיווי המשקל.'], en: ['Ear', 'The ear enables hearing and contributes to balance.'] },
-      { level: 'basic', key: 'tongue', x: 50, y: 64, he: ['הלשון', 'הלשון מסייעת בטעם, דיבור ובליעה.'], en: ['Tongue', 'The tongue supports taste, speech, and swallowing.'] },
-      { level: 'medium', key: 'skin', x: 50, y: 82, he: ['העור', 'העור מגן על הגוף ומכיל קולטני תחושה.'], en: ['Skin', 'The skin protects the body and contains sensory receptors.'] }
+      organ('eye', 40, 19, 'basic', 'העין', 'העין קולטת אור ומאפשרת ראייה.', 'Eye', 'The eye detects light and enables vision.'),
+      organ('ear', 61, 34, 'basic', 'האוזן', 'האוזן מאפשרת שמיעה ותורמת לשיווי המשקל.', 'Ear', 'The ear enables hearing and contributes to balance.'),
+      organ('tongue', 50, 64, 'basic', 'הלשון', 'הלשון מסייעת בטעם, דיבור ובליעה.', 'Tongue', 'The tongue supports taste, speech, and swallowing.'),
+      organ('skin', 50, 82, 'medium', 'העור', 'העור מגן על הגוף ומכיל קולטני תחושה.', 'Skin', 'The skin protects the body and contains sensory receptors.'),
+      organ('nose', 50, 48, 'medium', 'האף', 'האף מסייע בהרחה ובסינון האוויר.', 'Nose', 'The nose supports smell and filters air.'),
+      organ('inner-ear', 67, 40, 'advanced', 'האוזן הפנימית', 'האוזן הפנימית משתתפת בשמיעה ובשיווי משקל.', 'Inner Ear', 'The inner ear supports hearing and balance.')
     ]
   },
   maleReproductive: {
     image: 'images/male-reproductive-system-vintage-anatomy.jpg',
     title: { he: 'מערכת הרבייה הזכרית', en: 'Male Reproductive System' },
     organs: [
-      { level: 'basic', key: 'testes', x: 50, y: 67, he: ['האשכים', 'האשכים מייצרים תאי זרע והורמונים זכריים.'], en: ['Testes', 'The testes produce sperm cells and male hormones.'] },
-      { level: 'basic', key: 'prostate', x: 50, y: 52, he: ['הערמונית', 'הערמונית מפרישה נוזל המסייע בהרכב נוזל הזרע.'], en: ['Prostate', 'The prostate secretes fluid that contributes to semen.'] }
+      organ('testes', 50, 67, 'basic', 'האשכים', 'האשכים מייצרים תאי זרע והורמונים זכריים.', 'Testes', 'The testes produce sperm cells and male hormones.'),
+      organ('prostate', 50, 52, 'basic', 'הערמונית', 'הערמונית מפרישה נוזל המסייע בהרכב נוזל הזרע.', 'Prostate', 'The prostate secretes fluid that contributes to semen.'),
+      organ('vas-deferens', 55, 48, 'medium', 'צינור הזרע', 'צינור הזרע מוביל תאי זרע מן האשכים.', 'Vas Deferens', 'The vas deferens carries sperm from the testes.'),
+      organ('seminal-vesicles', 55, 45, 'advanced', 'שלפוחיות הזרע', 'שלפוחיות הזרע מפרישות נוזל חשוב לנוזל הזרע.', 'Seminal Vesicles', 'Seminal vesicles secrete fluid that contributes to semen.')
     ]
   },
   femaleReproductive: {
     image: 'images/female-reproductive-system-vintage-anatomy.jpg',
     title: { he: 'מערכת הרבייה הנשית', en: 'Female Reproductive System' },
     organs: [
-      { level: 'basic', key: 'ovaries', x: 50, y: 38, he: ['השחלות', 'השחלות מייצרות ביציות והורמונים נשיים.'], en: ['Ovaries', 'The ovaries produce egg cells and female hormones.'] },
-      { level: 'basic', key: 'uterus', x: 50, y: 51, he: ['הרחם', 'הרחם הוא איבר שרירי שבו מתפתח העובר במהלך היריון.'], en: ['Uterus', 'The uterus is a muscular organ where a fetus develops during pregnancy.'] },
-      { level: 'medium', key: 'vagina', x: 50, y: 66, he: ['הנרתיק', 'הנרתיק מחבר בין צוואר הרחם לחלק החיצוני של מערכת הרבייה.'], en: ['Vagina', 'The vagina connects the cervix to the external reproductive tract.'] }
+      organ('ovaries', 50, 38, 'basic', 'השחלות', 'השחלות מייצרות ביציות והורמונים נשיים.', 'Ovaries', 'The ovaries produce egg cells and female hormones.'),
+      organ('uterus', 50, 51, 'basic', 'הרחם', 'הרחם הוא איבר שרירי שבו מתפתח העובר במהלך היריון.', 'Uterus', 'The uterus is a muscular organ where a fetus develops during pregnancy.'),
+      organ('vagina', 50, 66, 'basic', 'הנרתיק', 'הנרתיק מחבר בין צוואר הרחם לחלק החיצוני של מערכת הרבייה.', 'Vagina', 'The vagina connects the cervix to the external reproductive tract.'),
+      organ('fallopian-tubes', 50, 42, 'medium', 'החצוצרות', 'החצוצרות מקשרות בין השחלות לרחם.', 'Fallopian Tubes', 'The fallopian tubes connect the ovaries to the uterus.'),
+      organ('cervix', 50, 58, 'advanced', 'צוואר הרחם', 'צוואר הרחם הוא החלק התחתון של הרחם המחבר לנרתיק.', 'Cervix', 'The cervix is the lower part of the uterus that connects to the vagina.')
     ]
   }
 };
 
+function organ(key, x, y, level, heTitle, heText, enTitle, enText) {
+  return { key, x, y, level, he: [heTitle, heText], en: [enTitle, enText] };
+}
 function lang() { return pageBody.dataset.lang || 'he'; }
-function labelFor(organ) { return organ[lang()][0]; }
-function currentSystemKey() { return pageBody.dataset.system || 'digestive'; }
-function visibleOrgans(systemKey) { return systems[systemKey].organs.filter(organ => detailOrder[organ.level || 'basic'] <= detailOrder[currentDetail]); }
-
+function labelFor(item) { return item[lang()][0]; }
+function visibleOrgans(systemKey) {
+  return systems[systemKey].organs.filter(item => detailOrder[item.level] <= detailOrder[currentDetailLevel]);
+}
 function renderTabs() {
   const nav = document.getElementById('systemTabs');
   nav.innerHTML = Object.entries(systems).map(([key, system], index) => `
@@ -129,33 +150,23 @@ function renderTabs() {
     </button>
   `).join('');
 }
-
 function renderHotspots(systemKey) {
-  hotspotLayer.innerHTML = visibleOrgans(systemKey).map(organ => `
-    <button class="hotspot" title="${labelFor(organ)}" style="left:${organ.x}%; top:${organ.y}%;" onclick="openOrgan('${systemKey}', '${organ.key}')" aria-label="${organ.en[0]}"></button>
+  hotspotLayer.innerHTML = visibleOrgans(systemKey).map(item => `
+    <button class="hotspot" title="${labelFor(item)}" style="left:${item.x}%; top:${item.y}%;" onclick="openOrgan('${systemKey}', '${item.key}')" aria-label="${item.en[0]}"></button>
   `).join('');
 }
-
 function renderOrganList(systemKey) {
-  organList.innerHTML = visibleOrgans(systemKey).map(organ => `
-    <button class="organ-chip" onclick="openOrgan('${systemKey}', '${organ.key}')">${labelFor(organ)}</button>
+  organList.innerHTML = visibleOrgans(systemKey).map(item => `
+    <button class="organ-chip" onclick="openOrgan('${systemKey}', '${item.key}')">${labelFor(item)}</button>
   `).join('');
 }
-
-function refreshVisibleOrgans() {
-  const key = currentSystemKey();
-  renderHotspots(key);
-  renderOrganList(key);
+function refreshAtlasContent() {
+  activeSystemTitle.textContent = systems[currentSystemKey].title[lang()];
+  renderHotspots(currentSystemKey);
+  renderOrganList(currentSystemKey);
 }
-
-function setDetailLevel(level, button) {
-  currentDetail = level;
-  document.querySelectorAll('.detail-btn').forEach(btn => btn.classList.remove('active'));
-  if (button) button.classList.add('active');
-  refreshVisibleOrgans();
-}
-
 function setSystem(systemKey, button) {
+  currentSystemKey = systemKey;
   const system = systems[systemKey];
   document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
   if (button) button.classList.add('active');
@@ -165,30 +176,31 @@ function setSystem(systemKey, button) {
   setTimeout(() => {
     atlasImage.src = system.image;
     atlasImage.alt = system.title.en;
-    refreshVisibleOrgans();
+    refreshAtlasContent();
     atlasImage.classList.remove('is-changing');
   }, 160);
 }
-
+function setDetailLevel(level, button) {
+  currentDetailLevel = level;
+  pageBody.dataset.detail = level;
+  document.querySelectorAll('.detail-btn').forEach(btn => btn.classList.remove('active'));
+  if (button) button.classList.add('active');
+  refreshAtlasContent();
+}
 function toggleLanguage() {
   const next = lang() === 'he' ? 'en' : 'he';
   pageBody.dataset.lang = next;
   document.documentElement.lang = next;
   document.documentElement.dir = next === 'he' ? 'rtl' : 'ltr';
-  const key = currentSystemKey();
-  activeSystemTitle.textContent = systems[key].title[next];
-  renderHotspots(key);
-  renderOrganList(key);
+  refreshAtlasContent();
 }
-
 function openOrgan(systemKey, organKey) {
-  const organ = systems[systemKey].organs.find(item => item.key === organKey);
-  const data = organ[lang()];
+  const item = systems[systemKey].organs.find(organItem => organItem.key === organKey);
+  const data = item[lang()];
   modalTitle.textContent = data[0];
   modalText.textContent = data[1];
   modal.showModal();
 }
-
 function closeOrgan() { modal.close(); }
 function scrollToAtlas() { document.getElementById('atlas').scrollIntoView({ behavior: 'smooth', block: 'center' }); }
 
