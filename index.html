@@ -6,14 +6,16 @@
   <title>אטלס גוף האדם | Human Body Interactive Atlas</title>
   <style>
     :root {
-      --bg: #f5ead8;
-      --paper: #fffaf1;
-      --text: #2b2118;
-      --muted: #705d4b;
-      --accent: #8b2f2f;
-      --accent-2: #c07a3f;
-      --border: rgba(85, 55, 30, 0.18);
-      --shadow: 0 20px 55px rgba(64, 38, 18, 0.18);
+      --bg: #070b12;
+      --paper: #101824;
+      --panel: rgba(16, 24, 36, 0.86);
+      --panel-2: rgba(20, 30, 45, 0.90);
+      --text: #f4eadc;
+      --muted: #c8b79f;
+      --accent: #d77b55;
+      --accent-2: #f0b36a;
+      --border: rgba(240, 179, 106, 0.20);
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
     }
 
     * { box-sizing: border-box; }
@@ -21,7 +23,10 @@
     body {
       margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #fff8ec 0%, var(--bg) 60%, #e6d0af 100%);
+      background:
+        radial-gradient(circle at top right, rgba(215, 123, 85, .18), transparent 34%),
+        radial-gradient(circle at bottom left, rgba(65, 105, 145, .22), transparent 38%),
+        linear-gradient(135deg, #06080d 0%, var(--bg) 52%, #121722 100%);
       color: var(--text);
       line-height: 1.7;
     }
@@ -41,17 +46,17 @@
     }
 
     .panel, .atlas-card {
-      background: rgba(255, 250, 241, 0.88);
+      background: var(--panel);
       border: 1px solid var(--border);
       border-radius: 28px;
       box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
     }
 
     .panel { padding: clamp(22px, 4vw, 44px); }
 
     .eyebrow {
-      color: var(--accent);
+      color: var(--accent-2);
       font-weight: 900;
       margin-bottom: 8px;
     }
@@ -84,13 +89,13 @@
 
     .primary {
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: white;
-      box-shadow: 0 12px 24px rgba(139, 47, 47, .24);
+      color: #17100b;
+      box-shadow: 0 12px 26px rgba(215, 123, 85, .24);
     }
 
     .secondary {
-      background: #fff1dc;
-      color: var(--accent);
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--accent-2);
       border: 1px solid var(--border);
     }
 
@@ -103,17 +108,27 @@
       position: relative;
       width: min(620px, 100%);
       margin: 0 auto;
-      background: #f7ead5;
+      background: #0c111a;
       border-radius: 22px;
       overflow: hidden;
-      border: 1px solid rgba(90, 60, 34, .22);
+      border: 1px solid rgba(240, 179, 106, .22);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.04), 0 18px 42px rgba(0,0,0,.45);
+    }
+
+    .atlas-frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255,255,255,.04), transparent 22%, rgba(0,0,0,.10));
+      z-index: 1;
     }
 
     .atlas-image {
       display: block;
       width: 100%;
       height: auto;
-      filter: contrast(1.03) saturate(1.02);
+      filter: contrast(1.08) saturate(1.04) brightness(.93);
     }
 
     .hotspot {
@@ -123,9 +138,9 @@
       height: clamp(18px, 3.2vw, 28px);
       padding: 0;
       border-radius: 50%;
-      background: rgba(139, 47, 47, 0.42);
-      border: 2px solid rgba(255, 244, 220, 0.86);
-      box-shadow: 0 0 0 3px rgba(139, 47, 47, .12), inset 0 0 0 2px rgba(255,255,255,.25);
+      background: rgba(215, 123, 85, 0.42);
+      border: 2px solid rgba(255, 232, 196, 0.72);
+      box-shadow: 0 0 0 3px rgba(215, 123, 85, .10), inset 0 0 0 2px rgba(255,255,255,.18);
       color: transparent;
       z-index: 2;
     }
@@ -135,16 +150,16 @@
       position: absolute;
       inset: -7px;
       border-radius: 50%;
-      background: rgba(255, 230, 185, .12);
+      background: rgba(240, 179, 106, .13);
       opacity: 0;
       transition: opacity .18s ease;
     }
 
     .hotspot:hover,
     .hotspot:focus-visible {
-      background: rgba(139, 47, 47, 0.70);
+      background: rgba(240, 179, 106, 0.76);
       outline: none;
-      box-shadow: 0 0 0 6px rgba(255, 230, 185, .25), 0 8px 20px rgba(80,35,22,.18);
+      box-shadow: 0 0 0 7px rgba(240, 179, 106, .20), 0 10px 25px rgba(0,0,0,.35);
     }
 
     .hotspot:hover::after,
@@ -166,17 +181,18 @@
     }
 
     .mini {
-      background: rgba(255, 250, 241, .9);
+      background: var(--panel-2);
       border: 1px solid var(--border);
       border-radius: 22px;
       padding: 18px;
+      box-shadow: 0 14px 34px rgba(0,0,0,.28);
     }
 
-    .mini h3 { margin: 0 0 8px; color: var(--accent); }
+    .mini h3 { margin: 0 0 8px; color: var(--accent-2); }
     .mini p { margin: 0; color: var(--muted); }
 
     dialog {
-      border: 0;
+      border: 1px solid var(--border);
       border-radius: 24px;
       width: min(520px, calc(100% - 28px));
       background: var(--paper);
@@ -185,10 +201,10 @@
       padding: 0;
     }
 
-    dialog::backdrop { background: rgba(36, 24, 14, .56); }
+    dialog::backdrop { background: rgba(0, 0, 0, .72); }
 
     .modal-content { padding: 24px; }
-    .modal-content h2 { margin: 0 0 8px; color: var(--accent); }
+    .modal-content h2 { margin: 0 0 8px; color: var(--accent-2); }
     .modal-content p { margin: 0; color: var(--muted); }
     .close { margin-top: 18px; }
 
