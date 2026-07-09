@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>דף איבר | Organ Anatomy Page</title>
-  <link rel="stylesheet" href="css/style.css?v=20260709-1" />
+  <link rel="stylesheet" href="css/style.css?v=20260709-2" />
 </head>
 <body data-lang="he" class="organ-page-body">
   <a class="skip-link" href="#organPageTitle">דלג לתוכן / Skip to content</a>
@@ -22,6 +22,37 @@
         <div class="eyebrow en-text en">Full Anatomy Page</div>
         <h1 id="organPageTitle"></h1>
         <p class="lead" id="organPageIntro"></p>
+        <section class="speech-panel" aria-labelledby="speechPanelTitle">
+          <h2 id="speechPanelTitle" class="speech-title">
+            <span class="he-text">הקראת הדף</span>
+            <span class="en-text">Listen to this page</span>
+          </h2>
+          <div class="speech-controls">
+            <button id="speechPlay" class="primary speech-btn" type="button" onclick="startSpeech()">
+              <span aria-hidden="true">▶</span>
+              <span class="he-text">הקרא</span><span class="en-text">Read aloud</span>
+            </button>
+            <button id="speechPause" class="secondary speech-btn" type="button" onclick="toggleSpeechPause()" disabled>
+              <span aria-hidden="true">⏸</span>
+              <span id="speechPauseLabelHe" class="he-text">השהה</span>
+              <span id="speechPauseLabelEn" class="en-text">Pause</span>
+            </button>
+            <button id="speechStop" class="secondary speech-btn" type="button" onclick="stopSpeech()" disabled>
+              <span aria-hidden="true">■</span>
+              <span class="he-text">עצור</span><span class="en-text">Stop</span>
+            </button>
+            <label class="speech-rate">
+              <span class="he-text">מהירות</span><span class="en-text">Speed</span>
+              <select id="speechRate" onchange="restartSpeechAtNewRate()">
+                <option value="0.75">0.75×</option>
+                <option value="1" selected>1×</option>
+                <option value="1.25">1.25×</option>
+                <option value="1.5">1.5×</option>
+              </select>
+            </label>
+          </div>
+          <p id="speechStatus" class="speech-status" role="status" aria-live="polite"></p>
+        </section>
         <div class="organ-quick-facts" id="quickFacts"></div>
       </div>
       <div class="organ-page-image-wrap">
@@ -50,7 +81,7 @@
     </aside>
   </main>
 
-  <script src="js/app.js?v=20260709-1"></script>
-  <script src="js/organ-page.js?v=20260709-1"></script>
+  <script src="js/app.js?v=20260709-2"></script>
+  <script src="js/organ-page.js?v=20260709-2"></script>
 </body>
 </html>
