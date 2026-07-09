@@ -157,14 +157,135 @@ function renderOrganPage() {
   const titles = isHe ? { etymology: 'אטימולוגיה ושם האיבר', history: 'היסטוריה וחקר האיבר', function: 'תפקיד פיזיולוגי', structure: 'אנטומיה ומבנה', blood: 'אספקת דם', innervation: 'עצבוב ובקרה', development: 'התפתחות עוברית', health: 'בריאות ומחלות נפוצות', tests: 'בדיקות רפואיות', fact: 'עובדה מעניינת' } : { etymology: 'Etymology and Name', history: 'History and Study', function: 'Physiological Function', structure: 'Anatomy and Structure', blood: 'Blood Supply', innervation: 'Innervation and Control', development: 'Embryological Development', health: 'Health and Common Conditions', tests: 'Medical Tests', fact: 'Interesting Fact' };
   const sections = isHe ? item.heSections : item.enSections;
   Object.keys(titles).forEach(key => { setText(`${key}Title`, titles[key]); setText(`${key}Text`, sections[key]); });
+  updateSpeechLabels();
 }
 
 function toggleOrganPageLanguage() {
+  stopSpeech();
   body.dataset.lang = currentLang() === 'he' ? 'en' : 'he';
   localStorage.setItem('atlas-language', body.dataset.lang);
   renderOrganPage();
 }
 
+let activeUtterance = null;
+let speechPaused = false;
+
+function speechSupported() {
+  return 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+}
+
+function speechText() {
+  const ids = [
+    'organPageTitle', 'organPageIntro',
+    'etymologyTitle', 'etymologyText', 'historyTitle', 'historyText',
+    'functionTitle', 'functionText', 'structureTitle', 'structureText',
+    'bloodTitle', 'bloodText', 'innervationTitle', 'innervationText',
+    'developmentTitle', 'developmentText', 'healthTitle', 'healthText',
+    'testsTitle', 'testsText', 'factTitle', 'factText'
+  ];
+  return ids.map(id => document.getElementById(id)?.textContent.trim()).filter(Boolean).join('. ');
+}
+
+function speechMessage(key) {
+  const messages = {
+    ready: { he: 'מוכן להקראה.', en: 'Ready to read.' },
+    speaking: { he: 'ההקראה פועלת.', en: 'Reading aloud.' },
+    paused: { he: 'ההקראה הושהתה.', en: 'Reading paused.' },
+    stopped: { he: 'ההקראה נעצרה.', en: 'Reading stopped.' },
+    finished: { he: 'ההקראה הסתיימה.', en: 'Reading finished.' },
+    unsupported: { he: 'הדפדפן הזה אינו תומך בהקראה.', en: 'This browser does not support text-to-speech.' },
+    error: { he: 'לא ניתן היה להפעיל את ההקראה.', en: 'The text-to-speech service could not start.' }
+  };
+  return messages[key][currentLang()];
+}
+
+function setSpeechStatus(key) {
+  setText('speechStatus', speechMessage(key));
+}
+
+function setSpeechControls(isSpeaking, isPaused = false) {
+  const play = document.getElementById('speechPlay');
+  const pause = document.getElementById('speechPause');
+  const stop = document.getElementById('speechStop');
+  if (!play || !pause || !stop) return;
+  play.disabled = isSpeaking && !isPaused;
+  pause.disabled = !isSpeaking;
+  stop.disabled = !isSpeaking;
+  speechPaused = isPaused;
+  updateSpeechLabels();
+}
+
+function updateSpeechLabels() {
+  const paused = speechPaused;
+  setText('speechPauseLabelHe', paused ? 'המשך' : 'השהה');
+  setText('speechPauseLabelEn', paused ? 'Resume' : 'Pause');
+}
+
+function matchingVoice(language) {
+  const voices = window.speechSynthesis.getVoices();
+  return voices.find(voice => voice.lang.toLowerCase().startsWith(language)) || null;
+}
+
+function startSpeech() {
+  if (!speechSupported()) {
+    setSpeechStatus('unsupported');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const language = currentLang() === 'he' ? 'he-IL' : 'en-US';
+  const utterance = new SpeechSynthesisUtterance(speechText());
+  utterance.lang = language;
+  utterance.rate = Number(document.getElementById('speechRate')?.value || 1);
+  const voice = matchingVoice(language.slice(0, 2));
+  if (voice) utterance.voice = voice;
+  utterance.onstart = () => { setSpeechControls(true, false); setSpeechStatus('speaking'); };
+  utterance.onend = () => { activeUtterance = null; setSpeechControls(false); setSpeechStatus('finished'); };
+  utterance.onerror = event => {
+    if (event.error === 'canceled' || event.error === 'interrupted') return;
+    activeUtterance = null;
+    setSpeechControls(false);
+    setSpeechStatus('error');
+  };
+  activeUtterance = utterance;
+  window.speechSynthesis.speak(utterance);
+}
+
+function toggleSpeechPause() {
+  if (!speechSupported() || !window.speechSynthesis.speaking) return;
+  if (window.speechSynthesis.paused) {
+    window.speechSynthesis.resume();
+    setSpeechControls(true, false);
+    setSpeechStatus('speaking');
+  } else {
+    window.speechSynthesis.pause();
+    setSpeechControls(true, true);
+    setSpeechStatus('paused');
+  }
+}
+
+function stopSpeech() {
+  if (speechSupported()) window.speechSynthesis.cancel();
+  activeUtterance = null;
+  setSpeechControls(false);
+  if (document.getElementById('speechStatus')) setSpeechStatus('stopped');
+}
+
+function restartSpeechAtNewRate() {
+  if (activeUtterance || (speechSupported() && window.speechSynthesis.speaking)) startSpeech();
+}
+
+function initializeSpeech() {
+  const controls = document.querySelectorAll('.speech-panel button, .speech-panel select');
+  if (!speechSupported()) {
+    controls.forEach(control => control.disabled = true);
+    setSpeechStatus('unsupported');
+    return;
+  }
+  setSpeechStatus('ready');
+  window.addEventListener('pagehide', () => window.speechSynthesis.cancel());
+}
+
 const savedLanguage = localStorage.getItem('atlas-language');
 if (savedLanguage === 'he' || savedLanguage === 'en') body.dataset.lang = savedLanguage;
 renderOrganPage();
+initializeSpeech();
