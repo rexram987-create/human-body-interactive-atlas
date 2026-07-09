@@ -56,7 +56,18 @@ const organData = {
       fact: 'The heart works continuously throughout life. Even during sleep, it keeps contracting and relaxing at an adjusted rhythm to maintain blood flow to all body tissues.'
     }
   }),
+  mouth: detailedOrgan('הפה', 'Mouth', 'images/organs/intestines-vintage-anatomy.jpg', 'מערכת העיכול', 'Digestive system', 'החלק הקדמי של הפנים', 'Front of the face', 'לעיסה, דיבור ותחילת העיכול', 'Chewing, speech, and the beginning of digestion'),
+  nasal: detailedOrgan('חלל האף', 'Nasal Cavity', 'images/organs/trachea-bronchi-vintage-anatomy.jpg', 'מערכת הנשימה והחושים', 'Respiratory and sensory systems', 'בתוך האף והפנים', 'Inside the nose and face', 'סינון, חימום ולחלוח האוויר', 'Filters, warms, and humidifies air'),
+  diaphragm: detailedOrgan('הסרעפת', 'Diaphragm', 'images/organs/lungs-vintage-anatomy.jpg', 'מערכת הנשימה והשרירים', 'Respiratory and muscular systems', 'בין בית החזה לבטן', 'Between chest and abdomen', 'שריר מרכזי בנשימה', 'Main muscle of breathing'),
+  larynx: detailedOrgan('הגרון', 'Larynx', 'images/organs/trachea-bronchi-vintage-anatomy.jpg', 'מערכת הנשימה', 'Respiratory system', 'קדמת הצוואר', 'Front of the neck', 'נשימה והפקת קול', 'Breathing and voice production'),
+  gallbladder: detailedOrgan('כיס המרה', 'Gallbladder', 'images/organs/liver-vintage-anatomy.jpg', 'מערכת העיכול', 'Digestive system', 'מתחת לכבד', 'Under the liver', 'אגירת מרה לעיכול שומנים', 'Stores bile for fat digestion'),
+  appendix: detailedOrgan('התוספתן', 'Appendix', 'images/organs/intestines-vintage-anatomy.jpg', 'מערכת העיכול והחיסון', 'Digestive and immune systems', 'תחילת המעי הגס', 'Beginning of the large intestine', 'תפקיד חיסוני מסוים', 'A limited immune-related role'),
+  rectum: detailedOrgan('החלחולת', 'Rectum', 'images/organs/intestines-vintage-anatomy.jpg', 'מערכת העיכול', 'Digestive system', 'סוף המעי הגס', 'End of the large intestine', 'אגירת פסולת לפני יציאה', 'Stores waste before elimination'),
   brain: detailedOrgan('המוח', 'Brain', 'images/organs/brain-vintage-anatomy.jpg', 'מערכת העצבים', 'Nervous system', 'חלל הגולגולת', 'Cranial cavity', 'בקרה, חשיבה, תחושה וזיכרון', 'Control, thought, sensation, and memory'),
+  spinal: detailedOrgan('חוט השדרה', 'Spinal Cord', 'images/organs/brain-vintage-anatomy.jpg', 'מערכת העצבים', 'Nervous system', 'בתוך עמוד השדרה', 'Inside the spinal column', 'העברת אותות עצביים', 'Transmits nerve signals'),
+  nerves: detailedOrgan('עצבים היקפיים', 'Peripheral Nerves', 'images/organs/brain-vintage-anatomy.jpg', 'מערכת העצבים', 'Nervous system', 'ברחבי הגוף', 'Throughout the body', 'קישור בין המוח, חוט השדרה והגוף', 'Connects brain, spinal cord, and body'),
+  cerebellum: detailedOrgan('המוחון', 'Cerebellum', 'images/organs/brain-vintage-anatomy.jpg', 'מערכת העצבים', 'Nervous system', 'חלק אחורי־תחתון של המוח', 'Back-lower part of the brain', 'קואורדינציה ושיווי משקל', 'Coordination and balance'),
+  sciatic: detailedOrgan('העצב הסיאטי', 'Sciatic Nerve', 'images/organs/brain-vintage-anatomy.jpg', 'מערכת העצבים', 'Nervous system', 'מהאגן אל הרגל', 'From pelvis into the leg', 'העברת אותות לרגל', 'Carries signals to the leg'),
   lungs: detailedOrgan('הריאות', 'Lungs', 'images/organs/lungs-vintage-anatomy.jpg', 'מערכת הנשימה', 'Respiratory system', 'בית החזה', 'Chest cavity', 'חילוף גזים בין אוויר לדם', 'Gas exchange between air and blood'),
   liver: detailedOrgan('הכבד', 'Liver', 'images/organs/liver-vintage-anatomy.jpg', 'מערכת העיכול וחילוף החומרים', 'Digestive and metabolic system', 'החלק הימני העליון של הבטן', 'Upper right abdomen', 'עיבוד חומרים, ייצור מרה ופירוק רעלים', 'Metabolism, bile production, and detoxification'),
   stomach: detailedOrgan('הקיבה', 'Stomach', 'images/organs/stomach-vintage-anatomy.jpg', 'מערכת העיכול', 'Digestive system', 'בטן עליונה', 'Upper abdomen', 'ערבול מזון ותחילת פירוקו', 'Mixes food and begins digestion'),
@@ -72,56 +83,59 @@ const organData = {
   thyroid: detailedOrgan('בלוטת התריס', 'Thyroid Gland', 'images/organs/thyroid-vintage-anatomy.jpg', 'המערכת האנדוקרינית', 'Endocrine system', 'קדמת הצוואר', 'Front of the neck', 'הפרשת הורמונים המשפיעים על חילוף החומרים', 'Produces hormones that affect metabolism'),
   eye: detailedOrgan('העין', 'Eye', 'images/organs/eye-vintage-anatomy.jpg', 'מערכת החושים', 'Sensory system', 'ארובת העין', 'Eye socket', 'קליטת אור וראייה', 'Detects light and enables vision'),
   ear: detailedOrgan('האוזן', 'Ear', 'images/organs/ear-vintage-anatomy.jpg', 'מערכת החושים', 'Sensory system', 'צדי הראש ועצם הרקה', 'Side of the head and temporal bone', 'שמיעה ושיווי משקל', 'Hearing and balance'),
-  'inner-ear': detailedOrgan('האוזן הפנימית', 'Inner Ear', 'images/organs/ear-vintage-anatomy.jpg', 'מערכת החושים', 'Sensory system', 'בתוך עצם הרקה', 'Inside the temporal bone', 'שמיעה ושיווי משקל עדינים', 'Fine hearing and balance control')
+  'inner-ear': detailedOrgan('האוזן הפנימית', 'Inner Ear', 'images/organs/ear-vintage-anatomy.jpg', 'מערכת החושים', 'Sensory system', 'בתוך עצם הרקה', 'Inside the temporal bone', 'שמיעה ושיווי משקל עדינים', 'Fine hearing and balance control'),
+  skull: detailedOrgan('הגולגולת', 'Skull', fallbackImage, 'מערכת השלד', 'Skeletal system', 'ראש', 'Head', 'הגנה על המוח ועיצוב הראש', 'Protects the brain and shapes the head'),
+  ribcage: detailedOrgan('כלוב הצלעות', 'Rib Cage', fallbackImage, 'מערכת השלד', 'Skeletal system', 'בית החזה', 'Chest', 'הגנה על הלב והריאות', 'Protects heart and lungs'),
+  pelvis: detailedOrgan('האגן', 'Pelvis', fallbackImage, 'מערכת השלד', 'Skeletal system', 'בסיס הגו', 'Base of trunk', 'תמיכה וחיבור לרגליים', 'Support and connection to legs'),
+  spine: detailedOrgan('עמוד השדרה', 'Spine', fallbackImage, 'מערכת השלד', 'Skeletal system', 'גב', 'Back', 'תמיכה והגנה על חוט השדרה', 'Support and spinal cord protection'),
+  humerus: detailedOrgan('עצם הזרוע', 'Humerus', fallbackImage, 'מערכת השלד', 'Skeletal system', 'זרוע עליונה', 'Upper arm', 'תנועה ותמיכה בזרוע', 'Movement and support of arm'),
+  femur: detailedOrgan('עצם הירך', 'Femur', fallbackImage, 'מערכת השלד', 'Skeletal system', 'ירך', 'Thigh', 'נשיאת משקל ותנועה', 'Weight bearing and movement'),
+  'chest-muscles': detailedOrgan('שרירי החזה', 'Chest Muscles', fallbackImage, 'מערכת השרירים', 'Muscular system', 'בית החזה', 'Chest', 'תנועת הזרועות ותמיכה', 'Arm movement and support'),
+  abdominals: detailedOrgan('שרירי הבטן', 'Abdominal Muscles', fallbackImage, 'מערכת השרירים', 'Muscular system', 'דופן הבטן', 'Abdominal wall', 'יציבה ותנועת הגו', 'Posture and trunk movement'),
+  'leg-muscles': detailedOrgan('שרירי הרגליים', 'Leg Muscles', fallbackImage, 'מערכת השרירים', 'Muscular system', 'רגליים', 'Legs', 'הליכה, עמידה וקפיצה', 'Walking, standing, and jumping'),
+  deltoid: detailedOrgan('שריר הדלתא', 'Deltoid', fallbackImage, 'מערכת השרירים', 'Muscular system', 'כתף', 'Shoulder', 'הרמת הזרוע', 'Raises the arm'),
+  biceps: detailedOrgan('שריר הזרוע הדו־ראשי', 'Biceps', fallbackImage, 'מערכת השרירים', 'Muscular system', 'זרוע קדמית', 'Front upper arm', 'כיפוף המרפק', 'Bends the elbow'),
+  quadriceps: detailedOrgan('הארבע־ראשי', 'Quadriceps', fallbackImage, 'מערכת השרירים', 'Muscular system', 'קדמת הירך', 'Front thigh', 'יישור הברך', 'Extends the knee'),
+  ureters: detailedOrgan('השופכנים', 'Ureters', 'images/organs/kidneys-vintage-anatomy.jpg', 'מערכת השתן', 'Urinary system', 'בין הכליות לשלפוחית', 'Between kidneys and bladder', 'הובלת שתן', 'Carries urine'),
+  'renal-arteries': detailedOrgan('עורקי הכליה', 'Renal Arteries', 'images/organs/kidneys-vintage-anatomy.jpg', 'מערכת הדם והשתן', 'Circulatory and urinary systems', 'ליד הכליות', 'Near the kidneys', 'אספקת דם לכליות', 'Supplies blood to kidneys'),
+  urethra: detailedOrgan('השופכה', 'Urethra', 'images/organs/urinary-bladder-vintage-anatomy.jpg', 'מערכת השתן', 'Urinary system', 'מתחת לשלפוחית', 'Below the bladder', 'הוצאת שתן מן הגוף', 'Carries urine out of the body'),
+  tongue: detailedOrgan('הלשון', 'Tongue', 'images/organs/eye-vintage-anatomy.jpg', 'מערכת העיכול והחושים', 'Digestive and sensory systems', 'חלל הפה', 'Oral cavity', 'טעם, דיבור ובליעה', 'Taste, speech, and swallowing'),
+  skin: detailedOrgan('העור', 'Skin', fallbackImage, 'מערכת הכסות והחושים', 'Integumentary and sensory systems', 'כל פני הגוף', 'Entire body surface', 'הגנה ותחושה', 'Protection and sensation'),
+  nose: detailedOrgan('האף', 'Nose', 'images/organs/trachea-bronchi-vintage-anatomy.jpg', 'מערכת הנשימה והחושים', 'Respiratory and sensory systems', 'מרכז הפנים', 'Center of face', 'הרחה וסינון אוויר', 'Smell and air filtering'),
+  testes: detailedOrgan('האשכים', 'Testes', fallbackImage, 'מערכת הרבייה הזכרית', 'Male reproductive system', 'שק האשכים', 'Scrotum', 'ייצור תאי זרע והורמונים', 'Produces sperm and hormones'),
+  prostate: detailedOrgan('הערמונית', 'Prostate', fallbackImage, 'מערכת הרבייה הזכרית', 'Male reproductive system', 'מתחת לשלפוחית השתן', 'Below the bladder', 'הפרשת נוזל לזרע', 'Secretes fluid for semen'),
+  'vas-deferens': detailedOrgan('צינור הזרע', 'Vas Deferens', fallbackImage, 'מערכת הרבייה הזכרית', 'Male reproductive system', 'באגן', 'Pelvis', 'הובלת תאי זרע', 'Carries sperm'),
+  'seminal-vesicles': detailedOrgan('שלפוחיות הזרע', 'Seminal Vesicles', fallbackImage, 'מערכת הרבייה הזכרית', 'Male reproductive system', 'מאחורי שלפוחית השתן', 'Behind bladder', 'הפרשת נוזל זרע', 'Secretes seminal fluid'),
+  ovaries: detailedOrgan('השחלות', 'Ovaries', fallbackImage, 'מערכת הרבייה הנשית', 'Female reproductive system', 'אגן', 'Pelvis', 'ייצור ביציות והורמונים', 'Produce eggs and hormones'),
+  uterus: detailedOrgan('הרחם', 'Uterus', fallbackImage, 'מערכת הרבייה הנשית', 'Female reproductive system', 'אגן', 'Pelvis', 'התפתחות היריון', 'Supports pregnancy'),
+  vagina: detailedOrgan('הנרתיק', 'Vagina', fallbackImage, 'מערכת הרבייה הנשית', 'Female reproductive system', 'אגן תחתון', 'Lower pelvis', 'חיבור לצוואר הרחם ולחוץ הגוף', 'Connects cervix to external body'),
+  'fallopian-tubes': detailedOrgan('החצוצרות', 'Fallopian Tubes', fallbackImage, 'מערכת הרבייה הנשית', 'Female reproductive system', 'בין השחלות לרחם', 'Between ovaries and uterus', 'הובלת ביצית', 'Carries egg cells'),
+  cervix: detailedOrgan('צוואר הרחם', 'Cervix', fallbackImage, 'מערכת הרבייה הנשית', 'Female reproductive system', 'תחתית הרחם', 'Lower uterus', 'חיבור בין רחם לנרתיק', 'Connects uterus and vagina')
 };
 
 function detailedOrgan(he, en, image, heSystem, enSystem, heLocation, enLocation, heRole, enRole) {
   return richOrgan({
     he, en, image,
-    heIntro: `${he} הוא איבר מרכזי בגוף האדם. הוא שייך ל${heSystem}, ממוקם ב${heLocation}, ותפקידו העיקרי הוא ${heRole}.`,
-    enIntro: `The ${en} is an important human organ. It belongs to the ${enSystem}, is located in the ${enLocation}, and its main role is to ${enRole.toLowerCase()}.`,
-    quickFacts: {
-      he: [['מערכת', heSystem], ['מיקום', heLocation], ['תפקיד', heRole], ['מבנה', 'מותאם לתפקידו האנטומי']],
-      en: [['System', enSystem], ['Location', enLocation], ['Role', enRole], ['Structure', 'Adapted to its anatomical function']]
-    },
+    heIntro: `${he} הוא איבר או מבנה מרכזי בגוף האדם. הוא שייך ל${heSystem}, ממוקם ב${heLocation}, ותפקידו העיקרי הוא ${heRole}.`,
+    enIntro: `The ${en} is an important human organ or structure. It belongs to the ${enSystem}, is located in the ${enLocation}, and its main role is to ${enRole.toLowerCase()}.`,
+    quickFacts: { he: [['מערכת', heSystem], ['מיקום', heLocation], ['תפקיד', heRole], ['מבנה', 'מותאם לתפקידו האנטומי']], en: [['System', enSystem], ['Location', enLocation], ['Role', enRole], ['Structure', 'Adapted to its anatomical function']] },
     heSections: {
-      etymology: `השם ${he} הוא השם האנטומי המקובל בעברית. בדף זה הוא מוצג יחד עם השם האנגלי ${en}, כדי לאפשר לימוד דו־לשוני ושימוש נוח באתר.`,
-      history: baseText.he.history(he),
-      function: `${he} מבצע תפקיד חיוני: ${heRole}. תפקיד זה משתלב עם פעילותם של איברים אחרים ומסייע לשמירה על תפקוד תקין של הגוף.`,
-      structure: `המבנה של ${he} מותאם היטב לתפקידו. הוא כולל רקמות, חללים, צינורות, כלי דם או סיבי עצב בהתאם לאופיו האנטומי ולמערכת שאליה הוא שייך.`,
-      blood: baseText.he.blood(he),
-      innervation: baseText.he.innervation(he),
-      development: baseText.he.development(he),
-      health: baseText.he.health(he),
-      tests: baseText.he.tests(he),
-      fact: baseText.he.fact(he)
+      etymology: `השם ${he} הוא השם האנטומי המקובל בעברית. בדף זה הוא מוצג יחד עם השם האנגלי ${en}, כדי לאפשר לימוד דו־לשוני ושימוש נוח באתר.`, history: baseText.he.history(he), function: `${he} מבצע תפקיד חיוני: ${heRole}. תפקיד זה משתלב עם פעילותם של איברים אחרים ומסייע לשמירה על תפקוד תקין של הגוף.`, structure: `המבנה של ${he} מותאם היטב לתפקידו. הוא כולל רקמות, חללים, צינורות, כלי דם או סיבי עצב בהתאם לאופיו האנטומי ולמערכת שאליה הוא שייך.`, blood: baseText.he.blood(he), innervation: baseText.he.innervation(he), development: baseText.he.development(he), health: baseText.he.health(he), tests: baseText.he.tests(he), fact: baseText.he.fact(he)
     },
     enSections: {
-      etymology: `The name ${en} is the standard English anatomical term. It is presented together with the Hebrew name ${he} to support bilingual learning and easy use of the atlas.`,
-      history: baseText.en.history(en),
-      function: `The ${en} performs an essential role: ${enRole.toLowerCase()}. This role works together with other organs and helps maintain normal body function.`,
-      structure: `The structure of the ${en} is adapted to its role. Depending on the organ, it may include tissues, chambers, ducts, vessels, or nerve fibers related to its body system.`,
-      blood: baseText.en.blood(en),
-      innervation: baseText.en.innervation(en),
-      development: baseText.en.development(en),
-      health: baseText.en.health(en),
-      tests: baseText.en.tests(en),
-      fact: baseText.en.fact(en)
+      etymology: `The name ${en} is the standard English anatomical term. It is presented together with the Hebrew name ${he} to support bilingual learning and easy use of the atlas.`, history: baseText.en.history(en), function: `The ${en} performs an essential role: ${enRole.toLowerCase()}. This role works together with other organs and helps maintain normal body function.`, structure: `The structure of the ${en} is adapted to its role. Depending on the organ, it may include tissues, chambers, ducts, vessels, or nerve fibers related to its body system.`, blood: baseText.en.blood(en), innervation: baseText.en.innervation(en), development: baseText.en.development(en), health: baseText.en.health(en), tests: baseText.en.tests(en), fact: baseText.en.fact(en)
     }
   });
 }
 
 function richOrgan(data) { return data; }
+function unknownOrgan(key) { return detailedOrgan('איבר לא מזוהה', 'Unknown Organ', fallbackImage, 'אטלס גוף האדם', 'Human body atlas', 'לא צוין', 'Not specified', 'יושלם בהמשך', 'To be completed'); }
 function currentLang() { return body.dataset.lang || 'he'; }
 function setText(id, value) { const el = document.getElementById(id); if (el) el.textContent = value; }
-
-function renderQuickFacts(item, isHe) {
-  const facts = isHe ? item.quickFacts.he : item.quickFacts.en;
-  document.getElementById('quickFacts').innerHTML = facts.map(([label, value]) => `<div class="quick-fact"><span>${label}</span><strong>${value}</strong></div>`).join('');
-}
+function renderQuickFacts(item, isHe) { const facts = isHe ? item.quickFacts.he : item.quickFacts.en; document.getElementById('quickFacts').innerHTML = facts.map(([label, value]) => `<div class="quick-fact"><span>${label}</span><strong>${value}</strong></div>`).join(''); }
 
 function renderOrganPage() {
-  const item = organData[organKey] || organData.heart;
+  const item = organData[organKey] || unknownOrgan(organKey);
   const isHe = currentLang() === 'he';
   document.documentElement.lang = isHe ? 'he' : 'en';
   document.documentElement.dir = isHe ? 'rtl' : 'ltr';
@@ -131,16 +145,11 @@ function renderOrganPage() {
   document.getElementById('organPageImage').src = item.image || fallbackImage;
   document.getElementById('organPageImage').alt = item.en;
   renderQuickFacts(item, isHe);
-  const titles = isHe
-    ? { etymology: 'אטימולוגיה ושם האיבר', history: 'היסטוריה וחקר האיבר', function: 'תפקיד פיזיולוגי', structure: 'אנטומיה ומבנה', blood: 'אספקת דם', innervation: 'עצבוב ובקרה', development: 'התפתחות עוברית', health: 'בריאות ומחלות נפוצות', tests: 'בדיקות רפואיות', fact: 'עובדה מעניינת' }
-    : { etymology: 'Etymology and Name', history: 'History and Study', function: 'Physiological Function', structure: 'Anatomy and Structure', blood: 'Blood Supply', innervation: 'Innervation and Control', development: 'Embryological Development', health: 'Health and Common Conditions', tests: 'Medical Tests', fact: 'Interesting Fact' };
+  const titles = isHe ? { etymology: 'אטימולוגיה ושם האיבר', history: 'היסטוריה וחקר האיבר', function: 'תפקיד פיזיולוגי', structure: 'אנטומיה ומבנה', blood: 'אספקת דם', innervation: 'עצבוב ובקרה', development: 'התפתחות עוברית', health: 'בריאות ומחלות נפוצות', tests: 'בדיקות רפואיות', fact: 'עובדה מעניינת' } : { etymology: 'Etymology and Name', history: 'History and Study', function: 'Physiological Function', structure: 'Anatomy and Structure', blood: 'Blood Supply', innervation: 'Innervation and Control', development: 'Embryological Development', health: 'Health and Common Conditions', tests: 'Medical Tests', fact: 'Interesting Fact' };
   const sections = isHe ? item.heSections : item.enSections;
   Object.keys(titles).forEach(key => { setText(`${key}Title`, titles[key]); setText(`${key}Text`, sections[key]); });
 }
 
-function toggleOrganPageLanguage() {
-  body.dataset.lang = currentLang() === 'he' ? 'en' : 'he';
-  renderOrganPage();
-}
+function toggleOrganPageLanguage() { body.dataset.lang = currentLang() === 'he' ? 'en' : 'he'; renderOrganPage(); }
 
 renderOrganPage();
