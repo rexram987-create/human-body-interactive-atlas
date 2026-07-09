@@ -4,6 +4,8 @@
 פרויקט דו־לשוני בעברית ובאנגלית ליצירת אתר לימודי אינטראקטיבי על גוף האדם.  
 A bilingual Hebrew-English educational project for building an interactive website about the human body.
 
+> **Medical disclaimer:** This project is intended for general education only. It is not medical advice and is not a substitute for professional diagnosis or treatment.
+
 ---
 
 ## עברית
@@ -45,6 +47,10 @@ The website will display an illustration of the human body and its internal orga
 - Initial interactive body demo with clickable organs.
 - Popup windows with basic explanations.
 - Responsive design for both mobile and desktop.
+- 8 body systems and 61 interactive structures.
+- Full information-page fallback for every structure.
+- Persistent language preference and keyboard-accessible navigation.
+- Automated validation for data and asset integrity.
 
 ### Planned Additions
 - Integration of the original historical human-body illustration.
@@ -52,6 +58,23 @@ The website will display an illustration of the human body and its internal orga
 - Expanded information for each organ.
 - Support for additional body systems: skeleton, muscles, nerves, digestion, respiration, and more.
 - Reliable information sources.
+- Professional medical review and per-image provenance records.
+
+### Local validation
+
+Run:
+
+```bash
+npm test
+```
+
+No build step is required. Serve the repository root with any static HTTP server.
+
+### Licensing and sources
+
+- Source code: MIT License. See `LICENSE`.
+- Medical references and image-status notes: see `SOURCES.md`.
+- Images are not covered by the MIT license unless their individual provenance explicitly permits it.
 
 ### Planned Image Source
 The next stage may integrate the image:

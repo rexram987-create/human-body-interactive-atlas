@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body data-lang="he">
+  <a class="skip-link" href="#atlas">דלג לאטלס / Skip to atlas</a>
   <nav class="system-nav" aria-label="Body system tabs">
     <div class="nav-inner" id="systemTabs"></div>
   </nav>
@@ -34,7 +35,7 @@
           <button class="detail-btn" data-detail="advanced" onclick="setDetailLevel('advanced', this)"><span class="he-text">מתקדם</span><span class="en-text">Advanced</span></button>
         </div>
         <div class="atlas-frame" aria-label="Interactive human body image">
-          <img id="atlasImage" class="atlas-image" src="images/digestive-system-vintage-anatomy.jpg" alt="Digestive System" />
+          <img id="atlasImage" class="atlas-image" src="images/digestive-system-vintage-anatomy.jpg" alt="Digestive System" decoding="async" fetchpriority="high" />
           <div id="hotspotLayer"></div>
         </div>
         <div class="organ-list" id="organList" aria-label="Clickable organ list"></div>
@@ -49,14 +50,21 @@
         <article class="mini"><h3 class="he-text">אזורים לחיצים</h3><h3 class="en-text en">Clickable Areas</h3><p class="he-text">כל תמונה כוללת נקודות לחיצה ורשימת איברים.</p><p class="en-text en">Each image includes clickable markers and an organ list.</p></article>
         <article class="mini"><h3 class="he-text">דפי מידע מורחבים</h3><h3 class="en-text en">Full Organ Pages</h3><p class="he-text">מכל חלון קופץ אפשר לעבור לדף מידע מורחב לאיבר.</p><p class="en-text en">Each popup can open a full information page for the organ.</p></article>
       </section>
+      <aside class="medical-disclaimer" role="note">
+        <strong class="he-text">הבהרה רפואית:</strong>
+        <strong class="en-text">Medical disclaimer:</strong>
+        <span class="he-text">האטלס מיועד ללמידה כללית בלבד ואינו תחליף לייעוץ, אבחון או טיפול רפואי מקצועי.</span>
+        <span class="en-text">This atlas is for general education only and does not replace professional medical advice, diagnosis, or treatment.</span>
+        <a href="SOURCES.md"><span class="he-text">מקורות וקרדיטים</span><span class="en-text">Sources and credits</span></a>
+      </aside>
     </main>
   </div>
 
-  <dialog id="organModal">
+  <dialog id="organModal" aria-labelledby="modalTitle">
     <div class="modal-content">
       <h2 id="modalTitle"></h2>
       <div id="modalText"></div>
-      <button class="primary close" onclick="closeOrgan()"><span class="he-text">סגור</span><span class="en-text">Close</span></button>
+      <button class="primary close" type="button" onclick="closeOrgan()"><span class="he-text">סגור</span><span class="en-text">Close</span></button>
     </div>
   </dialog>
 

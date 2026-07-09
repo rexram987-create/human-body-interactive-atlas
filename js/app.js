@@ -166,19 +166,19 @@ function imageFor(item) { return organImages[item.key] || null; }
 function renderTabs() {
   const nav = document.getElementById('systemTabs');
   nav.innerHTML = Object.entries(systems).map(([key, system], index) => `
-    <button class="tab ${index === 0 ? 'active' : ''}" data-system="${key}" onclick="setSystem('${key}', this)">
+    <button class="tab ${index === 0 ? 'active' : ''}" type="button" data-system="${key}" onclick="setSystem('${key}', this)" aria-pressed="${index === 0}">
       <span class="he-text">${system.title.he}</span><span class="en-text">${system.title.en}</span>
     </button>
   `).join('');
 }
 function renderHotspots(systemKey) {
   hotspotLayer.innerHTML = visibleOrgans(systemKey).map(item => `
-    <button class="hotspot" title="${labelFor(item)}" style="left:${item.x}%; top:${item.y}%;" onclick="openOrgan('${systemKey}', '${item.key}')" aria-label="${item.en[0]}"></button>
+    <button class="hotspot" type="button" title="${labelFor(item)}" style="left:${item.x}%; top:${item.y}%;" onclick="openOrgan('${systemKey}', '${item.key}')" aria-label="${labelFor(item)}"></button>
   `).join('');
 }
 function renderOrganList(systemKey) {
   organList.innerHTML = visibleOrgans(systemKey).map(item => `
-    <button class="organ-chip" onclick="openOrgan('${systemKey}', '${item.key}')">${labelFor(item)}</button>
+    <button class="organ-chip" type="button" onclick="openOrgan('${systemKey}', '${item.key}')">${labelFor(item)}</button>
   `).join('');
 }
 function refreshAtlasContent() {
@@ -187,10 +187,17 @@ function refreshAtlasContent() {
   renderOrganList(currentSystemKey);
 }
 function setSystem(systemKey, button) {
+  if (!systems[systemKey]) return;
   currentSystemKey = systemKey;
   const system = systems[systemKey];
-  document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-  if (button) button.classList.add('active');
+  document.querySelectorAll('.tab[data-system]').forEach(tab => {
+    tab.classList.remove('active');
+    tab.setAttribute('aria-pressed', 'false');
+  });
+  if (button) {
+    button.classList.add('active');
+    button.setAttribute('aria-pressed', 'true');
+  }
   pageBody.dataset.system = systemKey;
   activeSystemTitle.textContent = system.title[lang()];
   atlasImage.classList.add('is-changing');
@@ -213,6 +220,7 @@ function toggleLanguage() {
   pageBody.dataset.lang = next;
   document.documentElement.lang = next;
   document.documentElement.dir = next === 'he' ? 'rtl' : 'ltr';
+  localStorage.setItem('atlas-language', next);
   refreshAtlasContent();
 }
 function detailLabel(level) {
@@ -227,6 +235,7 @@ function openOrgan(systemKey, organKey) {
   currentSystemKey = systemKey;
   const system = systems[systemKey];
   const item = system.organs.find(organItem => organItem.key === organKey);
+  if (!item) return;
   const data = item[lang()];
   const imagePath = imageFor(item);
   modalTitle.textContent = data[0];
@@ -234,7 +243,7 @@ function openOrgan(systemKey, organKey) {
     ? { latin: 'שם באנגלית / לטיני', system: 'מערכת', level: 'רמת פירוט', role: 'תפקיד עיקרי', location: 'מיקום כללי', fact: 'עובדה מעניינת' }
     : { latin: 'English / Latin name', system: 'System', level: 'Detail level', role: 'Main function', location: 'General location', fact: 'Interesting fact' };
   const location = lang() === 'he' ? 'מסומן על האיור בהתאם למיקום האנטומי הכללי.' : 'Marked on the illustration according to its general anatomical position.';
-  const imageBlock = imagePath ? `<div class="organ-image-wrap"><img class="organ-image" src="${imagePath}" alt="${item.en[0]}"></div>` : '';
+  const imageBlock = imagePath ? `<div class="organ-image-wrap"><img class="organ-image" src="${imagePath}" alt="${item.en[0]}" loading="lazy" decoding="async"></div>` : '';
   modalText.innerHTML = `
     <div class="info-card">
       <div class="info-top">
@@ -255,5 +264,15 @@ function openOrgan(systemKey, organKey) {
 function closeOrgan() { modal.close(); }
 function scrollToAtlas() { document.getElementById('atlas').scrollIntoView({ behavior: 'smooth', block: 'center' }); }
 
-renderTabs();
-setSystem('digestive', document.querySelector('.tab[data-system="digestive"]'));
+function initializeAtlas() {
+  const savedLanguage = localStorage.getItem('atlas-language');
+  if (savedLanguage === 'he' || savedLanguage === 'en') {
+    pageBody.dataset.lang = savedLanguage;
+    document.documentElement.lang = savedLanguage;
+    document.documentElement.dir = savedLanguage === 'he' ? 'rtl' : 'ltr';
+  }
+  renderTabs();
+  setSystem('digestive', document.querySelector('.tab[data-system="digestive"]'));
+}
+
+if (document.getElementById('atlas')) initializeAtlas();

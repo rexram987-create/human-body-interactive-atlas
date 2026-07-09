@@ -10,6 +10,9 @@
   --border: rgba(240, 179, 106, 0.20);
   --shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
 }
+*:focus-visible { outline: 3px solid #ffd38f; outline-offset: 3px; }
+.skip-link { position: fixed; inset-inline-start: 12px; top: 8px; z-index: 1000; padding: 10px 14px; border-radius: 10px; background: #fff4dc; color: #24170d; transform: translateY(-160%); transition: transform .15s ease; }
+.skip-link:focus { transform: translateY(0); }
 
 * { box-sizing: border-box; }
 body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: radial-gradient(circle at top right, rgba(215, 123, 85, .18), transparent 34%), radial-gradient(circle at bottom left, rgba(65, 105, 145, .22), transparent 38%), linear-gradient(135deg, #06080d 0%, var(--bg) 52%, #121722 100%); color: var(--text); line-height: 1.7; }
@@ -68,6 +71,9 @@ dialog::backdrop { background: rgba(0, 0, 0, .72); }
 .info-value { color: var(--text); }
 .info-fact { background: rgba(240,179,106,.10); border: 1px solid rgba(240,179,106,.22); border-radius: 18px; padding: 14px; color: var(--muted); }
 .organ-detail-link { margin-top: 6px; width: fit-content; }
+.medical-disclaimer { margin: 28px 0 8px; padding: 16px 18px; border: 1px solid var(--border); border-radius: 16px; background: rgba(255, 246, 224, .07); line-height: 1.65; }
+.medical-disclaimer strong, .medical-disclaimer span { margin-inline-end: .35rem; }
+.medical-disclaimer a { color: var(--accent); white-space: nowrap; }
 .close { margin-top: 18px; }
 .organ-page { display: grid; gap: 18px; }
 .organ-hero { display: grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: center; }
@@ -78,3 +84,6 @@ dialog::backdrop { background: rgba(0, 0, 0, .72); }
 [data-lang="en"] .he-text { display: none; }
 [data-lang="he"] .en-text { display: none; }
 @media (max-width: 900px) { header, .info-grid, .info-grid-card, .info-top, .organ-hero, .organ-sections { grid-template-columns: 1fr; } .organ-image-wrap { max-width: 240px; margin: 0 auto; } .organ-page-image-wrap { max-width: 320px; margin: 0 auto; } header { min-height: auto; } .page { padding-top: 14px; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

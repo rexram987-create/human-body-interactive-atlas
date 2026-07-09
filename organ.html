@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body data-lang="he" class="organ-page-body">
+  <a class="skip-link" href="#organPageTitle">דלג לתוכן / Skip to content</a>
   <nav class="system-nav" aria-label="Organ page navigation">
     <div class="nav-inner">
       <a class="tab active" href="index.html">← <span class="he-text">חזרה לאטלס</span><span class="en-text">Back to Atlas</span></a>
@@ -24,7 +25,7 @@
         <div class="organ-quick-facts" id="quickFacts"></div>
       </div>
       <div class="organ-page-image-wrap">
-        <img id="organPageImage" class="organ-page-image" src="" alt="" />
+        <img id="organPageImage" class="organ-page-image" src="" alt="" decoding="async" />
       </div>
     </section>
 
@@ -40,8 +41,16 @@
       <article class="mini"><h3 id="testsTitle"></h3><p id="testsText"></p></article>
       <article class="mini"><h3 id="factTitle"></h3><p id="factText"></p></article>
     </section>
+    <aside class="medical-disclaimer" role="note">
+      <strong class="he-text">הבהרה רפואית:</strong>
+      <strong class="en-text">Medical disclaimer:</strong>
+      <span class="he-text">המידע מיועד ללמידה כללית ואינו תחליף לייעוץ רפואי.</span>
+      <span class="en-text">This information is for general education and is not a substitute for medical advice.</span>
+      <a href="SOURCES.md"><span class="he-text">מקורות וקרדיטים</span><span class="en-text">Sources and credits</span></a>
+    </aside>
   </main>
 
+  <script src="js/app.js"></script>
   <script src="js/organ-page.js"></script>
 </body>
 </html>

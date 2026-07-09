@@ -129,13 +129,22 @@ function detailedOrgan(he, en, image, heSystem, enSystem, heLocation, enLocation
 }
 
 function richOrgan(data) { return data; }
+function catalogOrgan(key) {
+  for (const system of Object.values(systems)) {
+    const item = system.organs.find(candidate => candidate.key === key);
+    if (item) {
+      return detailedOrgan(item.he[0], item.en[0], organImages[key] || fallbackImage, system.title.he, system.title.en, 'מסומן באיור האנטומי', 'Marked in the anatomical illustration', item.he[1], item.en[1]);
+    }
+  }
+  return null;
+}
 function unknownOrgan(key) { return detailedOrgan('איבר לא מזוהה', 'Unknown Organ', fallbackImage, 'אטלס גוף האדם', 'Human body atlas', 'לא צוין', 'Not specified', 'יושלם בהמשך', 'To be completed'); }
 function currentLang() { return body.dataset.lang || 'he'; }
 function setText(id, value) { const el = document.getElementById(id); if (el) el.textContent = value; }
 function renderQuickFacts(item, isHe) { const facts = isHe ? item.quickFacts.he : item.quickFacts.en; document.getElementById('quickFacts').innerHTML = facts.map(([label, value]) => `<div class="quick-fact"><span>${label}</span><strong>${value}</strong></div>`).join(''); }
 
 function renderOrganPage() {
-  const item = organData[organKey] || unknownOrgan(organKey);
+  const item = organData[organKey] || catalogOrgan(organKey) || unknownOrgan(organKey);
   const isHe = currentLang() === 'he';
   document.documentElement.lang = isHe ? 'he' : 'en';
   document.documentElement.dir = isHe ? 'rtl' : 'ltr';
@@ -150,6 +159,12 @@ function renderOrganPage() {
   Object.keys(titles).forEach(key => { setText(`${key}Title`, titles[key]); setText(`${key}Text`, sections[key]); });
 }
 
-function toggleOrganPageLanguage() { body.dataset.lang = currentLang() === 'he' ? 'en' : 'he'; renderOrganPage(); }
+function toggleOrganPageLanguage() {
+  body.dataset.lang = currentLang() === 'he' ? 'en' : 'he';
+  localStorage.setItem('atlas-language', body.dataset.lang);
+  renderOrganPage();
+}
 
+const savedLanguage = localStorage.getItem('atlas-language');
+if (savedLanguage === 'he' || savedLanguage === 'en') body.dataset.lang = savedLanguage;
 renderOrganPage();

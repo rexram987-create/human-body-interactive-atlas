@@ -1,0 +1,10 @@
+{
+  "name": "human-body-interactive-atlas",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bilingual interactive educational atlas of the human body",
+  "scripts": {
+    "test": "node tests/validate.mjs"
+  },
+  "license": "MIT"
+}

@@ -1,6 +1,7 @@
 const originalOpenOrgan = window.openOrgan;
 
 window.openOrgan = function(systemKey, organKey) {
+  if (typeof originalOpenOrgan !== 'function') return;
   originalOpenOrgan(systemKey, organKey);
 
   const modalText = document.getElementById('modalText');
