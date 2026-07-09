@@ -80,6 +80,14 @@ dialog::backdrop { background: rgba(0, 0, 0, .72); }
 .organ-page-image-wrap { border-radius: 24px; overflow: hidden; border: 1px solid var(--border); background: rgba(255,255,255,.05); box-shadow: 0 18px 42px rgba(0,0,0,.30); }
 .organ-page-image { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
 .organ-sections { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.speech-panel { margin: 20px 0 16px; padding: 16px; border: 1px solid rgba(240,179,106,.24); border-radius: 18px; background: rgba(240,179,106,.08); }
+.speech-title { margin: 0 0 12px; color: var(--accent-2); font-size: 1.05rem; }
+.speech-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.speech-btn { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.speech-btn:disabled { opacity: .48; cursor: not-allowed; transform: none; }
+.speech-rate { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-weight: 800; }
+.speech-rate select { min-height: 44px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 12px; background: #17130f; color: var(--text); font: inherit; }
+.speech-status { min-height: 1.5em; margin: 10px 0 0; color: var(--muted); }
 .en { direction: ltr; text-align: left; }
 [data-lang="en"] .he-text { display: none; }
 [data-lang="he"] .en-text { display: none; }
