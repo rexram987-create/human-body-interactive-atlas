@@ -169,6 +169,9 @@ function toggleOrganPageLanguage() {
 
 let activeUtterance = null;
 let speechPaused = false;
+let speechChunks = [];
+let speechChunkIndex = 0;
+let speechSession = 0;
 
 function speechSupported() {
   return 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
@@ -184,6 +187,37 @@ function speechText() {
     'testsTitle', 'testsText', 'factTitle', 'factText'
   ];
   return ids.map(id => document.getElementById(id)?.textContent.trim()).filter(Boolean).join('. ');
+}
+
+function splitSpeechText(text, maxLength = 600) {
+  const sentences = text.match(/[^.!?।]+[.!?।]+|[^.!?।]+$/g) || [text];
+  const chunks = [];
+  let chunk = '';
+  sentences.forEach(sentence => {
+    const next = `${chunk} ${sentence}`.trim();
+    if (next.length <= maxLength) {
+      chunk = next;
+      return;
+    }
+    if (chunk) chunks.push(chunk);
+    if (sentence.length <= maxLength) {
+      chunk = sentence.trim();
+      return;
+    }
+    const words = sentence.trim().split(/\s+/);
+    chunk = '';
+    words.forEach(word => {
+      const candidate = `${chunk} ${word}`.trim();
+      if (candidate.length > maxLength && chunk) {
+        chunks.push(chunk);
+        chunk = word;
+      } else {
+        chunk = candidate;
+      }
+    });
+  });
+  if (chunk) chunks.push(chunk);
+  return chunks;
 }
 
 function speechMessage(key) {
@@ -232,16 +266,37 @@ function startSpeech() {
     return;
   }
   window.speechSynthesis.cancel();
+  speechSession += 1;
+  const session = speechSession;
   const language = currentLang() === 'he' ? 'he-IL' : 'en-US';
-  const utterance = new SpeechSynthesisUtterance(speechText());
+  speechChunks = splitSpeechText(speechText());
+  speechChunkIndex = 0;
+  setSpeechControls(true, false);
+  setSpeechStatus('speaking');
+  speakNextChunk(language, session);
+}
+
+function speakNextChunk(language, session) {
+  if (session !== speechSession) return;
+  if (speechChunkIndex >= speechChunks.length) {
+    activeUtterance = null;
+    setSpeechControls(false);
+    setSpeechStatus('finished');
+    return;
+  }
+  const utterance = new SpeechSynthesisUtterance(speechChunks[speechChunkIndex]);
   utterance.lang = language;
   utterance.rate = Number(document.getElementById('speechRate')?.value || 1);
   const voice = matchingVoice(language.slice(0, 2));
   if (voice) utterance.voice = voice;
-  utterance.onstart = () => { setSpeechControls(true, false); setSpeechStatus('speaking'); };
-  utterance.onend = () => { activeUtterance = null; setSpeechControls(false); setSpeechStatus('finished'); };
+  utterance.onend = () => {
+    if (session !== speechSession) return;
+    speechChunkIndex += 1;
+    speakNextChunk(language, session);
+  };
   utterance.onerror = event => {
     if (event.error === 'canceled' || event.error === 'interrupted') return;
+    if (session !== speechSession) return;
     activeUtterance = null;
     setSpeechControls(false);
     setSpeechStatus('error');
@@ -264,8 +319,11 @@ function toggleSpeechPause() {
 }
 
 function stopSpeech() {
+  speechSession += 1;
   if (speechSupported()) window.speechSynthesis.cancel();
   activeUtterance = null;
+  speechChunks = [];
+  speechChunkIndex = 0;
   setSpeechControls(false);
   if (document.getElementById('speechStatus')) setSpeechStatus('stopped');
 }
